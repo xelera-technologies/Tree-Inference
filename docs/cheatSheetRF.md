@@ -26,7 +26,7 @@ Run the prediction on FPGA
 ```
 predictions = inference_engine.predict(X_test)
 ```
-where `X_test` is an `ndarry` of the input Samples. Predictions are returned.
+where `X_test` is a `numpy.ndarray` of the input samples. Predictions are returned.
 
 Shutdown
 ```
