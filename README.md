@@ -69,7 +69,7 @@ Xelera decision Tree Inference is available as:
 5. Run the container using the script provided by the shipped package: `./run_docker.sh`
 
 #### Get started with examples
-* Predict the flight delay
+* [Predict the flight delay](exampleFlight)
 
 ## Cheat Sheet
 
