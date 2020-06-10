@@ -188,7 +188,7 @@ Now we have a machine learning model which can be used to perform an inference o
 - a normalization value (float)
 - the number of trees in the model
 
-This tuple is put together by a 'setup' class which is framework-dependent. To get an instance, use the following code of a setup class, use the following code:
+This tuple is put together by a 'setup' class which is framework-dependent. To get an instance of a setup class, use the following code:
 
 - sk-learn:
 
