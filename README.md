@@ -54,10 +54,8 @@ Xelera decision Tree Inference is available as:
 0. Start the Xelera decision Tree Inference AMI on a f1.2xlarge EC2 instance
 1. Connect to the just started remote EC2 instance
 2. Login as user `centos` on the AMI (no password is required)
-3. Navigate to the `xelera_demo` folder: `cd xelera_demo`
+3. Navigate to the `xelera_demo` folder: `cd /app/xelera_demo`
 4. Source the setup script: `source xelera_setup.sh`
-5. Clone the decision Tree Inference demo repository : `git clone https://github.com/xelera-technologies/Tree-Inference.git`
-6. Change to the Tree-Inference folder: `cd Tree-Inference`
 
 ###### Docker Image for Alveo cards
 
