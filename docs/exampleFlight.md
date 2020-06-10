@@ -294,6 +294,13 @@ offer a sk-learn style interface.
     time_total_sw /= nLoops
 ```
 
+When all inferences are done on the FPGA, we can safely shutdown the engine and release the FPGA:
+
+```python
+    del engine
+    xl.shutdown()
+```
+
 
 Finally, we compute the error on both the inferred data by the CPU and the FPGA, and print the time spent. ```python
 
@@ -305,6 +312,7 @@ Finally, we compute the error on both the inferred data by the CPU and the FPGA,
     print("Error FPGA: ", error_fpga.mean())
     print("SW time: ", time_total_sw, "s (average over ", nLoops, " iterations")
     print("FPGA time: ", time_total_fpga, "s (average over ", nLoops, " iterations")
+    
 ```
 
 **Note:** The first inference done with an instance of the engine typically takes more time than subsequent requests since the FPGA needs to be set up initially. For optimal performance in the current release, try to use the same amount of samples in subsequent requests.

@@ -4,7 +4,7 @@
 <img src="docs/images/Tree_Inference_overview.png" align="middle" width="500"/>
 </p>
 
-**Xelera decision Tree Inference** provides FPGA-accelerated inference (prediction) for real-time Classification and Regression applications when high-throughput or low-latency matters. It supports **Random Forest**, **XGBoost** and **LightGBM** algorithms. The user should first train its own model using one of the supoprted frameworks (**Scikit-learn**, **XGBoost**, **LightGBM**, **H20.ai** and **H20 Dirverless AI**) and then load and run the prediction via a Python call to Xelera decision Tree Inference Library.
+**Xelera decision Tree Inference** provides FPGA-accelerated inference (prediction) for real-time Classification and Regression applications when high-throughput or low-latency matters. It supports **Random Forest**, **XGBoost** and **LightGBM** algorithms. The user should first train its own model using one of the supported frameworks (**Scikit-learn**, **XGBoost**, **LightGBM**, **H20.ai** and **H20 Driverless AI**) and then load and run the prediction via a Python call to Xelera decision Tree Inference Library.
 
 
 Additional resource:
