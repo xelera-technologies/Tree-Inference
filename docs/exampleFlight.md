@@ -61,8 +61,10 @@ Run the Random Forest multinomial classification with 100 trees and 1000 samples
 
 You will be guided through an example which shows you how to leverage the Xelera Tree Inference Engine. It will cover the setup phase, in which a trained model from one of the supported frameworks is transformed into a model that can be loaded to the FPGA, and the inference phase, where this model is used to perform the actual inference.
 
-Contents:
+Overview:
 - [Flight Delay Example](Flight-Delay-Example)
+- [Parameters](Parameters)
+-[Package Import](Package-Import)
 - [Data Preparation](Data-Preparation)
 - [Model Training](Model-Training)
 - [FPGA Model Setup](Model-Setup-for-the-FPGA)
@@ -129,6 +131,7 @@ We will load the dataset (using ```pandas```) and sample an amount of data from 
     data_origin.dropna(inplace=True)
 
     feature_names.remove("ARRIVAL_DELAY") # arrival delay is not a feature but the target
+    numFeatures = len(feature_names)
 
     data = data_origin.copy()
     cols = ["AIRLINE","FLIGHT_NUMBER","DESTINATION_AIRPORT","ORIGIN_AIRPORT"]
@@ -245,30 +248,30 @@ Next is the actual inference. This is equal for all three frameworks. First, we 
 
 ```python
 
-engine = xl.XlRfInference()
-engine.setModel(model_fpga)
+    engine = xl.XlRfInference()
+    engine.setModel(model_fpga)
 
 ```
 
 Our samples to infer are a ```numpy.ndarray``` with the shape ```(numSamples, numFeatures)```, the data type ```numpy.float32```, and in column-major order (```order='C'```):
 ```python
-samples = np.ndarray(x_test, dtype=np.float32, order='C')
+    samples = np.ndarray(x_test, dtype=np.float32, order='C')
 ```
 
  Additionally, we measure the time over a number of iterations to get an average:
 
 ```python
-nLoops = 1000
-time_total_fpga = 0
-for n in range(nLoops):
-    start_time = time.perf_counter()
+    nLoops = 1000
+    time_total_fpga = 0
+    for n in range(nLoops):
+        start_time = time.perf_counter()
 
-    # actual prediction call:
-    predictions_fpga = engine.predict(samples)
+        # actual prediction call:
+        predictions_fpga = engine.predict(samples)
 
-    end_time = time.perf_counter()
-    time_total_fpga = += (end_time - start_time)
-time_total_fpga /= nLoops
+        end_time = time.perf_counter()
+        time_total_fpga = += (end_time - start_time)
+    time_total_fpga /= nLoops
 
 ```
 
@@ -282,13 +285,13 @@ offer a sk-learn style interface.
 
 ```python
 
-time_total_sw = 0
-for n in range(nLoops):
-    start_time = time.perf_counter()
-    predictions_sw = model.predict(samples)
-    end_time = time.perf_counter()
-    time_total_sw += (end_time - start_time)
-time_total_sw /= nLoops
+    time_total_sw = 0
+    for n in range(nLoops):
+        start_time = time.perf_counter()
+        predictions_sw = model.predict(samples)
+        end_time = time.perf_counter()
+        time_total_sw += (end_time - start_time)
+    time_total_sw /= nLoops
 ```
 
 
