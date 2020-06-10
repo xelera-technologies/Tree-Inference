@@ -149,7 +149,8 @@ if enable_regression:
         hw_time = 0
         for i in range(nLoops):
             hw_start_time = time.perf_counter()
-            y_pred = xlrf.predict(np.array(x_test, dtype=np.float32, order='C'))
+            x_nd = np.array(x_test, dtype=np.float32, order='C')
+            y_pred = xlrf.predict(x_nd)
             hw_stop_time = time.perf_counter()
             hw_time += (hw_stop_time - hw_start_time)
 
@@ -269,7 +270,8 @@ if enable_binomial:
         hw_time = 0
         for i in range(nLoops):
             hw_start_time = time.perf_counter()
-            y_pred = xlrf.predict(np.array(x_test))
+            x_nd = np.array(x_test, dtype=np.float32, order='C')
+            y_pred = xlrf.predict(x_nd)
             hw_stop_time = time.perf_counter()
             hw_time += (hw_stop_time - hw_start_time)
 
@@ -409,7 +411,8 @@ if enable_multinomial:
         hw_time = 0
         for i in range(nLoops):
             hw_start_time = time.perf_counter()
-            y_pred = xlrf.predict(np.array(x_test))
+            x_nd = np.array(x_test, dtype=np.float32, order='C')
+            y_pred = xlrf.predict(x_nd)
             hw_stop_time = time.perf_counter()
             hw_time += (hw_stop_time - hw_start_time)
 
