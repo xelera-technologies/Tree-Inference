@@ -5,12 +5,10 @@ This usage example shows how to predict a flight delay using the [2015 Flight De
 #### Prerequisites
 
 * Install and run the Xelera decision Tree Inference AMI or Docker Image
-* [Download](https://www.kaggle.com/usdot/flight-delays/data?select=flights.csv) the flight delay public dataset
-* Load the file `flight.csv`:
-    * AMI: `scp -i <certificate_name.pem> flight.csv centos@<EC2_IP_address>:/home/centos/xelera-demo/data/flight-delays/flights.csv`
-    * Docker:
-        * Get the running `<containers_id>`: `docker ps | grep "xtil"`
-        * `docker cp flight.csv <container_id>:/app/xelera_demo/data/flight-delays/flights.csv`
+* (docker only) [Download](https://www.kaggle.com/usdot/flight-delays/data?select=flights.csv) the flight delay public dataset
+* (docker only) Load the file `flight.csv`:
+    * Get the running `<containers_id>`: `docker ps | grep "xtil"`
+    * `docker cp flight.csv <container_id>:/app/xelera_demo/data/flight-delays/flights.csv`
 * Get a copy of the example scripts provided by Xelera decision Tree Inference GitHub repository:
     1. Navigate to the `/app/xelera_demo` folder.
     2. Clone the Xelera decision Tree Inference GitHub repository: `git clone https://github.com/xelera-technologies/Tree-Inference.git`
@@ -43,19 +41,11 @@ See the following table for experiment arguments:
 
 ###### Random Forest multinomial classification inference on SW and HW (example)
 
-**Docker**:
 Run the Random Forest multinomial classification with 100 trees and 1000 samples using `python3 scripts/RF_scikit_flight.py --data_fpath /app/xelera_demo/data/flight-delays/flights.csv --enable_multinomial true --enable_regression false --number_of_trees 100 --num_test_samples 1000`. You will be prompted the accurracy and latency measures for CPU (SW) and FPGA (HW) inference runs. Note that training and execution in software might take some time.
 
-**AWS**:
-Run the Random Forest multinomial classification with 100 trees and 1000 samples using `python3 scripts/RF_scikit_flight.py --data_fpath /home/centos/xelera-demo/data/flight-delays/flights.csv --enable_multinomial true --enable_regression false --number_of_trees 100 --num_test_samples 1000`. You will be prompted the accurracy and latency measures for CPU (SW) and FPGA (HW) inference runs. Note that training and execution in software might take some time.
-
 ###### Random Forest multinomial classification inference on HW only (example)
-**Docker**:
+
 Run the Random Forest multinomial classification with 100 trees and 1000 samples using `python3 scripts/RF_scikit_flight.py --data_fpath /app/xelera_demo/data/flight-delays/flights.csv --enable_SW_inference false --enable_multinomial true --enable_regression false --number_of_trees 100 --num_test_samples 1000`. You will be prompted the accurracy and latency measures for FPGA (HW) inference runs.
-
-**AWS**:
-Run the Random Forest multinomial classification with 100 trees and 1000 samples using `python3 scripts/RF_scikit_flight.py --data_fpath /home/centos/xelera-demo/data/flight-delays/flights.csv --enable_SW_inference false --enable_multinomial true --enable_regression false --number_of_trees 100 --num_test_samples 1000`. You will be prompted the accurracy and latency measures for FPGA (HW) inference runs.
-
 
 #### Step-by-Step Guide
 
@@ -105,7 +95,7 @@ Start by importing the python library of the Inference engine:
 
 Additionally, import the packages required for data handling and time measurings:
 
-```python 
+```python
 
     import pandas as pd, numpy as np
     import time
@@ -149,7 +139,7 @@ We will load the dataset (using ```pandas```) and sample an amount of data from 
     y_test = y_test.head(numTestSamples)
 ```
 
-As you can see, we loaded and cleaned the data set, replaced categorical features by numerical values, and performed a split. 
+As you can see, we loaded and cleaned the data set, replaced categorical features by numerical values, and performed a split.
 
 ##### Model Training
 
@@ -192,7 +182,7 @@ This tuple is put together by a 'setup' class which is framework-dependent. To g
 - sk-learn:
 
      ```python
-    setup = xl.XlRandomForestSetup() 
+    setup = xl.XlRandomForestSetup()
     ```
 
 - XGBoost:
@@ -306,13 +296,13 @@ Finally, we compute the error on both the inferred data by the CPU and the FPGA,
 
 ```python
     error_sw = abs(y_test - predictions_sw)
-    error_fpga = abs(y_test - predictions_fpga) 
+    error_fpga = abs(y_test - predictions_fpga)
 
     print("Error SW: ", error_sw.mean())
     print("Error FPGA: ", error_fpga.mean())
     print("SW time: ", time_total_sw, "s (average over ", nLoops, " iterations")
     print("FPGA time: ", time_total_fpga, "s (average over ", nLoops, " iterations")
-    
+
 ```
 
 **Note:** The first inference done with an instance of the engine typically takes more time than subsequent requests since the FPGA needs to be set up initially. For optimal performance in the current release, try to use the same amount of samples in subsequent requests.
