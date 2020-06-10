@@ -70,7 +70,7 @@ def parse_arguments():
     tree_inference_parser.add_argument(
         '--data_fpath',
         type=str,
-        default='/home/centos/xelera-demo/data/flight-delays/flights.csv',
+        default='/app/xelera_demo/data/flight-delays/flights.csv',
         help='Dataset file. Default: ./data/flight-delays/flights.csv')
 
 
