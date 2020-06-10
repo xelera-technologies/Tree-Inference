@@ -89,6 +89,7 @@ We will set some parameters for this example:
     numTestSamples = 100
     nLoops = 1000
     max_depth= 8
+    num_leaves=900
 
 ```
 
@@ -97,7 +98,7 @@ These parameters do not yield optimal results on the estimation, but rather serv
 
 ##### Package Import
 
-Start by importing the python library of the Inference engine:
+Start by importing the python library of the Inference Engine:
 ```python
 
     import XlPluginRandomForest as xl
@@ -112,7 +113,7 @@ Additionally, import the packages required for data handling and time measurings
 
 ```
 
-Depending on the framework, you need to import of course the framework pacakges. See the scripts for more details.
+Depending on the framework, you need to import of course the framework packages. See the scripts for more details.
 
 
 ##### Data Preparation
@@ -158,7 +159,7 @@ For training, we use these simple parameters for the given framework. They do no
 - sk-learn:
     ```python
         from sklearn.ensemble import RandomForestRegressor
-        model = RandomForestRegressor(max_depth=max_depth,n_estimators=number_of_trees, n_jobs=32, random_state=1234)
+        model = RandomForestRegressor(max_depth=max_depth,n_estimators=max_number_of_trees, n_jobs=32, random_state=1234)
         fit(x_train, y_train)
     ```
 - XGBoost:
@@ -171,7 +172,7 @@ For training, we use these simple parameters for the given framework. They do no
 - LightGBM:
     ```python
        import lightgbm as lgb
-       model_regression = lgb.LGBMRegressor(learning_rate=0.15, num_leaves=900, max_depth=max_depth, n_estimators=max_number_of_trees)
+       model_regression = lgb.LGBMRegressor(learning_rate=0.15, num_leaves=num_leaves, max_depth=max_depth, n_estimators=max_number_of_trees)
        model_regression.fit(x_train,y_train)
     ```
 
