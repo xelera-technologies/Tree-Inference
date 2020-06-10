@@ -96,7 +96,8 @@ if enable_regression:
         xlSetup = xl.XlXGBSetup()
         num_classes = 1
         fpga_model_regression = xlSetup.getModelForFPGA(model_regression.get_booster(), max_depth, num_classes, feature_names)
-        
+
+
 
     ######### Inference SW ########
 

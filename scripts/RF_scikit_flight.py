@@ -144,12 +144,12 @@ if enable_regression:
         setup_endtime = time.perf_counter()
         HW_setup_time = setup_endtime - setup_starttime
 
+        x_nd = np.array(x_test, dtype=np.float32, order='C')
 
         print("Starting HW Inference...")
         hw_time = 0
         for i in range(nLoops):
             hw_start_time = time.perf_counter()
-            x_nd = np.array(x_test, dtype=np.float32, order='C')
             y_pred = xlrf.predict(x_nd)
             hw_stop_time = time.perf_counter()
             hw_time += (hw_stop_time - hw_start_time)
@@ -266,11 +266,11 @@ if enable_binomial:
         setup_endtime = time.perf_counter()
         HW_setup_time = setup_endtime - setup_starttime
 
+        x_nd = np.array(x_test, dtype=np.float32, order='C')
         print("Starting HW inference ...")
         hw_time = 0
         for i in range(nLoops):
             hw_start_time = time.perf_counter()
-            x_nd = np.array(x_test, dtype=np.float32, order='C')
             y_pred = xlrf.predict(x_nd)
             hw_stop_time = time.perf_counter()
             hw_time += (hw_stop_time - hw_start_time)
@@ -407,11 +407,12 @@ if enable_multinomial:
         setup_endtime = time.perf_counter()
         HW_setup_time = setup_endtime - setup_starttime
 
+        x_nd = np.array(x_test, dtype=np.float32, order='C')
+
         print("Starting HW inference ...")
         hw_time = 0
         for i in range(nLoops):
-            hw_start_time = time.perf_counter()
-            x_nd = np.array(x_test, dtype=np.float32, order='C')
+            hw_start_time = time.perf_counter()           
             y_pred = xlrf.predict(x_nd)
             hw_stop_time = time.perf_counter()
             hw_time += (hw_stop_time - hw_start_time)
