@@ -262,7 +262,6 @@ Our samples to infer are a ```numpy.ndarray``` with the shape ```(numSamples, nu
  Additionally, we measure the time over a number of iterations to get an average:
 
 ```python
-    nLoops = 1000
     time_total_fpga = 0
     for n in range(nLoops):
         start_time = time.perf_counter()
