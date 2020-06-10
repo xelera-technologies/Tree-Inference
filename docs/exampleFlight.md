@@ -69,6 +69,12 @@ Overview:
 We will exercise this example using the [flight-delays](https://www.kaggle.com/usdot/flight-delays/data?select=flights.csv) dataset. The Tree-based machine learning model will try to estimate the delay of a flight depending on 18 features like airports, time, etc.. In case of regression, the delay itself will be estimated; in case of classification, the delay will be binned into dicrete slots representing a range of delay time, and the bin for each sample is estimated. For the getteing started guide, we will stick to regression as it is available for all of sk-learn, XGBoost and LightGBM in the current release.
 
 If you want to see the whole picture, look at the scripts in the [scripts](../scripts/)  folder.
+Use the builtin ```help``` function to explore the python library. As example, enter python3 and run:
+```
+import XlPluginRandomForest as xl
+help(xl.XlRFInference)
+```
+to see the help information about `XlRFInference`.
 
 ##### Parameters
 
@@ -307,4 +313,3 @@ Finally, we compute the error on both the inferred data by the CPU and the FPGA,
 
 **Note:** The first inference done with an instance of the engine typically takes more time than subsequent requests since the FPGA needs to be set up initially. For optimal performance in the current release, try to use the same amount of samples in subsequent requests.
 
-For a complete overview, take a look at the [scripts](../scripts/) and use the builtin ```help``` function to explore the python library.
