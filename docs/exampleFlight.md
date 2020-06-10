@@ -117,7 +117,7 @@ Depending on the framework, you need to import of course the framework pacakges.
 
 ##### Data Preparation
 
-We will load the dataset (using ```pandas```) and sample an amount of data from it. The data will be split into a training and test set:
+We will load the dataset (using ```pandas```) and sample an amount of data from it. The data will be split into a training and test set. Ensure that your ```dataset_name``` points to the file ```flight-delays/flights.csv``` which you downloaded.
 
 ```python
     data_origin = pd.read_csv(dataset_name)
