@@ -62,9 +62,9 @@ Run the Random Forest multinomial classification with 100 trees and 1000 samples
 You will be guided through an example which shows you how to leverage the Xelera Tree Inference Engine. It will cover the setup phase, in which a trained model from one of the supported frameworks is transformed into a model that can be loaded to the FPGA, and the inference phase, where this model is used to perform the actual inference.
 
 Overview:
-- [Flight Delay Example](Flight-Delay-Example)
+- [Flight Delay Example](#Flight-Delay-Example)
 - [Parameters](Parameters)
--[Package Import](Package-Import)
+- [Package Import](Package-Import)
 - [Data Preparation](Data-Preparation)
 - [Model Training](Model-Training)
 - [FPGA Model Setup](Model-Setup-for-the-FPGA)
