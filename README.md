@@ -1,7 +1,7 @@
 # Xelera decision Tree Inference
 
 <p align="center">
-<img src="doc/images/Tree_Inference_overview.png" align="middle" width="500"/>
+<img src="docs/images/Tree_Inference_overview.png" align="middle" width="500"/>
 </p>
 
 **Xelera decision Tree Inference** provides FPGA-accelerated inference (prediction) for real-time Classification and Regression applications when high-throughput or low-latency matters. It supports **Random Forest**, **XGBoost** and **LightGBM** algorithms. The user should first train its own model using one of the supoprted frameworks (**Scikit-learn**, **XGBoost**, **LightGBM**, **H20.ai** and **H20 Dirverless AI**) and then load and run the prediction via a Python call to Xelera decision Tree Inference Library.
@@ -40,7 +40,7 @@ Additional resource:
 |   [AWS f1.2xlarge](https://aws.amazon.com/de/ec2/instance-types/f1/)                     | xilinx_aws-vu9p-f1_shell-v04261818_201920_1 | provided as AMI <br> [Request access](https://xelera.io/survey-aws-ami-xelera-tree-inference-engine)|
 
 ## Features and Limitations
-For supported features and current limitations, see [supported parameters](doc/supportedFeatures.md).
+For supported features and current limitations, see [supported parameters](docs/supportedFeatures.md).
 
 ## Usage
 
@@ -73,9 +73,9 @@ Xelera decision Tree Inference is available as:
 
 ## Cheat Sheet
 
-* [Random Forest](doc/cheatSheetRF.md)
-* [XGBoost](doc/cheatSheetXGBoost.md)
-* [LightGBM](doc/cheatSheetLightGBM.md)
+* [Random Forest](docs/cheatSheetRF.md)
+* [XGBoost](docs/cheatSheetXGBoost.md)
+* [LightGBM](docs/cheatSheetLightGBM.md)
 
 ## Contacts
 
