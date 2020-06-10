@@ -53,13 +53,13 @@ You will be guided through an example which shows you how to leverage the Xelera
 
 Overview:
 - [Flight Delay Example](#flight-delay-example)
-- [Parameters](Parameters)
-- [Package Import](Package-Import)
-- [Data Preparation](Data-Preparation)
-- [Model Training](Model-Training)
-- [FPGA Model Setup](Model-Setup-for-the-FPGA)
-- [FPGA Inference](FPGA-Inference)
-- [Comparison](Comparison)
+- [Parameters](#parameters)
+- [Package Import](#package-import)
+- [Data Preparation](#data-preparation)
+- [Model Training](#model-training)
+- [FPGA Model Setup](#model-setup-for-the-fpga)
+- [FPGA Inference](#fpga-inference)
+- [Comparison](#comparison)
 
 
 
