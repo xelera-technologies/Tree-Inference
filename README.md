@@ -21,7 +21,8 @@ Additional resource:
         * Regression
         * Classification (Binomial)
     * LightGBM
-        * Regression (Binomial)
+        * Regression
+        * Classification (Binomial)
 * Supported frameworks:
     * Scikit-learn
     * XGBboost

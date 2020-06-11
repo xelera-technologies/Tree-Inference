@@ -1,5 +1,11 @@
 # LightGBM (LightGBM) Cheat Sheet
 
+The Python library documentation is available as a built-in ```help``` function. As example, to get the help information about `XlRFInference` function, from inside a *python3* shell run:
+
+```
+import XlPluginRandomForest as xl
+help(xl.XlRFInference)
+```
 
 ### Prepare trained model for FPGA
 

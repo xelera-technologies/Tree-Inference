@@ -1,5 +1,11 @@
 # XGBoost (XGBoost) Cheat Sheet
 
+The Python library documentation is available as a built-in ```help``` function. As example, to get the help information about `XlRFInference` function, from inside a *python3* shell run:
+
+```
+import XlPluginRandomForest as xl
+help(xl.XlRFInference)
+```
 
 ### Prepare trained model for FPGA
 
@@ -12,7 +18,7 @@ where:
 * `model` is the trained model with XGBoost
 * `num_classes` is the number of classes of the label
 * `max_depth` is the max depth of all the trees in the forest
-* `feature_names`.
+* `feature_names` is the list of feature names
 
 A trained model (`fpga_model`) prepared for FPGA is returned.
 
