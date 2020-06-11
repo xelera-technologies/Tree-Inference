@@ -10,7 +10,7 @@
         * Regression
         * Classification (Binomial)
 * Supported frameworks:
-    * Scikit-learn
+    * scikit-learn
     * XGBboost
     * LightGBM
 * Python interface

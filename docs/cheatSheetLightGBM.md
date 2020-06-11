@@ -16,8 +16,8 @@ jsonModelDump = json.dumps(bdump)
 fpga_model_regression = xlSetup.getModelForFPGA(jsonModelDump, max_depth)
 ```
 where:
-* `model` is the trained model with LighGBM
-* `max_depth` is the max depth of all the trees in the forest
+* `model` is the trained LightGBM booster which shall be inferred
+* `max_depth` is the maximum depth of the trees in the trained booster
 
 A trained model (`fpga_model`) prepared for FPGA is returned.
 

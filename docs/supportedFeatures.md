@@ -13,7 +13,7 @@ Since the Xelera decision Tree Inference is suited only for inference of tree-ba
 | samples input     | `numpy.ndarray` | use `order=`\`C\`, `dtype=np.float32, shape=(nSamples, nFeatures)` |
 | multiprocess      | not supported | in development |
 
-##### Scikit-learn
+##### scikit-learn
 
 | Parameter/Feature | Limitation    | Notes |
 | ----------------- | ----------    | ----- |

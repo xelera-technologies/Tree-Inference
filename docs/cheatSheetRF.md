@@ -1,4 +1,4 @@
-# Random Forest (scikit) Cheat Sheet
+# Random Forest (scikit-learn) Cheat Sheet
 
 The Python library documentation is available as a built-in ```help``` function. As example, to get the help information about `XlRFInference` function, from inside a *python3* shell run:
 
@@ -15,7 +15,7 @@ xlSetup = xl.XlRandomForestSetup()
 fpga_model = xlSetup.getModelForFPGA(model)
 del xlSetup
 ```
-where `model` is the trained model with Scikit. A trained model (`fpga_model`) prepared for FPGA is returned.
+where `model` is a trained scikit-learn Random Forest model which shall be inferred. A trained model (`fpga_model`) prepared for FPGA is returned.
 
 ### Run inference (prediction) on FPFA
 

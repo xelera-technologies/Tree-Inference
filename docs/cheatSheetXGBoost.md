@@ -15,9 +15,9 @@ fpga_model = xlSetup.getModelForFPGA(model.get_booster(), max_depth, num_classes
 del xlSetup
 ```
 where:
-* `model` is the trained model with XGBoost
-* `num_classes` is the number of classes of the label
-* `max_depth` is the max depth of all the trees in the forest
+* `model` is the trained XGBoost booster which shall be inferred
+* `num_classes` is the number of classes which shall be inferred. 1 in case of regression, 2 in case of binomial classification, n>2 in case of multi-class classification
+* `max_depth` is the maximum depth of the trees in booster
 * `feature_names` is the list of feature names
 
 A trained model (`fpga_model`) prepared for FPGA is returned.
