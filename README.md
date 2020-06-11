@@ -51,10 +51,12 @@ Xelera decision Tree Inference is available as:
 
 ###### AMI for AWS
 
-0. [Request access](https://xelera.io/survey-aws-ami-xelera-tree-inference-engine) to the Xelera decision Tree Inference AMI
-0. Start the Xelera decision Tree Inference AMI on a f1.2xlarge EC2 instance
-1. Connect to the just started remote EC2 instance
-2. Login as user `centos` on the AMI (no password is required)
+0. [Request access](https://xelera.io/survey-aws-ami-xelera-tree-inference-engine) to the Xelera decision Tree Inference Demo AMI
+1. Launch a new EC2 f1.2xlarge Instance using the the Xelera decision Tree Inference Demo AMI. Xelera decision Tree Inference Demo AMI is available under "My AMIs" -> "shared with me" section of the "Step 1: Choose an Amazon Machine Image (AMI)" panel.
+<p align="center">
+<img src="docs/images/AWS_sharedAMI.png" align="middle" width="500"/>
+</p>
+2. Connect to the remote EC2 instance. Use `centos` as username.
 3. Navigate to the `xelera_demo` folder: `cd /app/xelera_demo`
 4. Source the setup script: `source xelera_setup.sh`
 
@@ -63,7 +65,7 @@ Xelera decision Tree Inference is available as:
 0. [Request access](https://xelera.io/survey-aws-ami-xelera-tree-inference-engine) to the Xelera decision Tree Inference Docker Image.
 1. [Install Docker](https://docs.docker.com/get-docker/) and [ensure your linux user is in the group docker](https://docs.docker.com/engine/install/linux-postinstall/)
 2. [Install Xilinx Runtime Library (XRT)](https://github.com/Xilinx/XRT) on the host system
-3. Decompress the shipped package in a folder. The shipped package contains a docker images (`image_xtil_u2xxx.tar`), a run script (`./run_docker.sh`) and a readme (`readme.md`)
+3. Decompress the shipped package in a folder. The shipped package contains a docker images (`image_xtil_u200.tar`), a run script (`./run_docker.sh`) and a readme (`readme.md`)
 4. Load the provided docker image to the host system. As example for an Alveo U200: `docker load < image_xtil_u200.tar`
 5. Run the container using the script provided by the shipped package: `./run_docker.sh`
 
