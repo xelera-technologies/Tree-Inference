@@ -4,14 +4,14 @@ This usage example shows how to predict a flight delay using the [2015 Flight De
 
 #### Prerequisites
 
-* Install and run the Xelera decision Tree Inference AMI or Docker Image
-* (docker only) [Download](https://www.kaggle.com/usdot/flight-delays/data?select=flights.csv) the flight delay public dataset
-* (docker only) Load the file `flight.csv`:
-    * Get the running `<containers_id>`: `docker ps | grep "xtil"`
-    * `docker cp flight.csv <container_id>:/app/xelera_demo/data/flight-delays/flights.csv`
+* Install and Run the Xelera decision Tree Inference AMI or Docker Image
 * Get a copy of the example scripts provided by Xelera decision Tree Inference GitHub repository:
     1. Navigate to the `/app/xelera_demo` folder.
     2. Clone the Xelera decision Tree Inference GitHub repository: `git clone https://github.com/xelera-technologies/Tree-Inference.git`
+* (docker only) [Download](https://www.kaggle.com/usdot/flight-delays/data?select=flights.csv) the flight delay public dataset
+* (docker only) Load the file `flight.csv`:
+    * Get the running `<containers_id>`: `docker ps | grep "decision-tree-inference"`
+    * `docker cp flights.csv <container_id>:/app/xelera_demo/data/flight-delays/flights.csv`
 
 #### Quick Start
 

@@ -1,4 +1,4 @@
-### Beta 0.1.0
+### 0.3.0b3
 * Supported algorithms:
     * Random Forest
         * Regression

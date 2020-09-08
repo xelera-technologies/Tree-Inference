@@ -35,9 +35,7 @@ Additional resource:
 
 |            Cards/Platform            |     Shell        |  Note        |
 | :-------------------------: |:-------------------------: |:-------------------------: |
-|   [Xilinx Alveo U50](https://www.xilinx.com/products/boards-and-kits/alveo/u50.html)  | xilinx-u50-xdma-201920.1  | provided as Docker image <br> [Request license](https://xelera.io/survey-aws-ami-xelera-tree-inference-engine) |
-|   [Xilinx Alveo U200](https://www.xilinx.com/products/boards-and-kits/alveo/u200.html) | xilinx-u200-xdma-201830.2 | provided as Docker image <br> [Request license](https://xelera.io/survey-aws-ami-xelera-tree-inference-engine) |
-|   [Xilinx Alveo U250](https://www.xilinx.com/products/boards-and-kits/alveo/u250.html)| xilinx-u250-xdma-201830.2 | provided as Docker image <br> [Request license](https://xelera.io/survey-aws-ami-xelera-tree-inference-engine) |
+|   [Xilinx Alveo U200](https://www.xilinx.com/products/boards-and-kits/alveo/u200.html) | xilinx-u200-xdma-201830.2 |  [Docker image](https://hub.docker.com/repository/docker/xeleratechnologies/decision-tree-inference/general) |
 |   [AWS f1.2xlarge](https://aws.amazon.com/de/ec2/instance-types/f1/)                     | xilinx_aws-vu9p-f1_shell-v04261818_201920_1 | provided as AMI <br> [Request access](https://xelera.io/survey-aws-ami-xelera-tree-inference-engine)|
 
 ## Features and Limitations
@@ -64,12 +62,46 @@ Xelera decision Tree Inference is available as:
 
 ###### Docker Image for Alveo cards
 
-0. [Request access](https://xelera.io/survey-aws-ami-xelera-tree-inference-engine) to the Xelera decision Tree Inference Docker Image.
-1. [Install Docker](https://docs.docker.com/get-docker/) and [ensure your linux user is in the group docker](https://docs.docker.com/engine/install/linux-postinstall/)
-2. [Install Xilinx Runtime Library (XRT)](https://github.com/Xilinx/XRT) on the host system
-3. Decompress the shipped package in a folder. The shipped package contains a docker images (`image_xtil_u200.tar`), a run script (`./run_docker.sh`) and a readme (`readme.md`)
-4. Load the provided docker image to the host system. As example for an Alveo U200: `docker load < image_xtil_u200.tar`
-5. Run the container using the script provided by the shipped package: `./run_docker.sh`
+1. [Request License](https://xelera.io/survey-aws-ami-xelera-tree-inference-engine) for the Xelera decision Tree Inference Docker Image.
+2. [Install Docker](https://docs.docker.com/get-docker/) and [ensure your linux user is in the docker group](https://docs.docker.com/engine/install/linux-postinstall/)
+3. [Install Xilinx Runtime Library (XRT)](https://github.com/Xilinx/XRT) on the host system
+4. Run the container
+
+```
+tagname="on-premise-u200-0.3.0b3"
+
+user=`whoami`
+timestamp=`date +%Y-%m-%d_%H-%M-%S`
+
+xclmgmt_driver="$(find /dev -name xclmgmt\*)"
+docker_devices=""
+echo "Found xclmgmt driver(s) at ${xclmgmt_driver}"
+for i in ${xclmgmt_driver} ;
+do
+  docker_devices+="--device=$i "
+done
+
+render_driver="$(find /dev/dri -name renderD\*)"
+echo "Found render driver(s) at ${render_driver}"
+for i in ${render_driver} ;
+do
+  docker_devices+="--device=$i "
+done
+
+docker run \
+     -it \
+     --rm \
+     $docker_devices \
+     -e "TERM=xterm-256color" \
+     --name cont-decision-tree-inference-$USER-$timestamp \
+     xeleratechnologies/decision-tree-inference:${tagname} \
+     /bin/bash .
+```
+
+5. Using a new terminal, load the LICENSE file into the container `<license_file>.xlicpak`:
+    * Get the running `<containers_id>`: `docker ps | grep "decision-tree-inference"`
+    * `docker cp <license_file>.xlicpak <container_id>:/usr/share/xelera/<license_file>.xlicpak`
+
 
 #### Get started with examples
 * [Predict the flight delay](docs/exampleFlight.md)
