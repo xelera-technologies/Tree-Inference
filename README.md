@@ -35,7 +35,7 @@ Additional resource:
 
 |            Cards/Platform            |     Shell        |  Note        |
 | :-------------------------: |:-------------------------: |:-------------------------: |
-|   [Xilinx Alveo U200](https://www.xilinx.com/products/boards-and-kits/alveo/u200.html) | xilinx-u200-xdma-201830.2 |  [Docker image](https://hub.docker.com/repository/docker/xeleratechnologies/decision-tree-inference/general) |
+|   [Xilinx Alveo U200](https://www.xilinx.com/products/boards-and-kits/alveo/u200.html) | xilinx-u200-xdma-201830.2 |  [Docker image](https://hub.docker.com/r/xeleratechnologies/decision-tree-inference) |
 |   [AWS f1.2xlarge](https://aws.amazon.com/de/ec2/instance-types/f1/)                     | xilinx_aws-vu9p-f1_shell-v04261818_201920_1 | provided as AMI <br> [Request access](https://xelera.io/survey-aws-ami-xelera-tree-inference-engine)|
 
 ## Features and Limitations
