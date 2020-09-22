@@ -1,13 +1,12 @@
 # On-premises
 
 
-1. [Request License](https://xelera.io/product/demo-license-requests) for the Xelera decision Tree Inference Docker Image.
+1. [Request License](https://xelera.io/product/demo-license-requests) for the Xelera decision Tree Inference Docker Image and download the License Key File `<license_file>.xlicpak`
 2. Host Setup
     1. Clone GitHub Repository for Xilinx Base Runtime: `git clone https://github.com/Xilinx/Xilinx_Base_Runtime.git && cd Xilinx_Base_Runtime`
-    2. `cd Xilinx_Base_Runtime`
     2. Run the Host Setup Script: `./host_setup.sh -v 2020.1`
-3. Install Docker (if it's not installed yet)
-    1. `cd utilities`
+3. Install Docker (if not installed yet)
+    1. `cd Xilinx_Base_Runtime/utilities`
     2. `./docker_install.sh`
 4. Run the Container
 
