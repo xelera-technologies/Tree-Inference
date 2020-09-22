@@ -8,10 +8,11 @@
 3. Install Docker (if not installed yet)
     1. `cd Xilinx_Base_Runtime/utilities`
     2. `./docker_install.sh`
-4. Run the Container
+4. Update `<license_file>` value and start the Container running the script:
 
 ```
-tagname="on-premise-u200-0.3.0b3"
+tagname="u200-2020.1-0.3.0b3"
+license_file="<license_file>.xlicpak"
 
 user=`whoami`
 timestamp=`date +%Y-%m-%d_%H-%M-%S`
@@ -36,11 +37,8 @@ docker run \
      --rm \
      $docker_devices \
      -e "TERM=xterm-256color" \
+     --mount type=bind,source=${PWD}/$license_file,target=/opt/xelera/license.xlicpak,readonly \
      --name cont-decision-tree-inference-$USER-$timestamp \
      xeleratechnologies/decision-tree-inference:${tagname} \
      /bin/bash .
 ```
-
-5. Using a new terminal, load the LICENSE file into the container `<license_file>.xlicpak`:
-    * Get the running `<containers_id>`: `docker ps | grep "decision-tree-inference"`
-    * `docker cp <license_file>.xlicpak <container_id>:/usr/share/xelera/<license_file>.xlicpak`
