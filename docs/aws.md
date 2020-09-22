@@ -5,7 +5,7 @@
 1. Launch a new EC2 f1.2xlarge Instance using the the Xelera decision Tree Inference Demo AMI. Xelera decision Tree Inference Demo AMI is available under "My AMIs" -> "shared with me" section of the "Step 1: Choose an Amazon Machine Image (AMI)" panel.
 
 <p align="center">
-<img src="docs/images/AWS_sharedAMI.png" align="middle" width="500"/>
+<img src="images/AWS_sharedAMI.png" align="middle" width="500"/>
 </p>
 
 2. Connect to the remote EC2 instance. Use `centos` as username.
