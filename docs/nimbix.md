@@ -1,7 +1,7 @@
 # Nimbix
 
 
-1. [Request License](https://xelera.io/product/demo-license-requests) for the Xelera decision Tree Inference Docker Image and download the License Key File `<license_file>.xlicpak`
+1. [Request License](https://xelera.io/product/demo-license-requests) for the Xelera decision Tree Inference Docker Image and download the License Key File `<license-file>.xlicpak`
 2. Sign up for Nimbix Service: https://www.nimbix.net/alveotrial
 3. Application Execution
     * Click Xelera decision Tree Inference on the Nimbix Platform
@@ -13,4 +13,4 @@
         <p align="center">
         <img src="images/nimbix2.png" align="middle" width="500"/>
         </p>
-4. SSH to the created instance: `ssh -i <pem_file>.pem centos@<instance-ip>`
+4. 4. SSH to the launched instance: `ssh nimbix@<nimbix-instance-ip>`
