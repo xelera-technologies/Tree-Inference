@@ -4,7 +4,8 @@ This usage example shows how to predict a flight delay using the [2015 Flight De
 
 #### Prerequisites
 
-* Install and Run the Xelera decision Tree Inference Docker Image
+* [Request License](https://xelera.io/product/demo-license-requests) for the Xelera decision Tree Inference Docker Image and download the License Key File `<license-file>.xlicpak`
+* Run the Xelera decision Tree Inference Docker Image
 * Get a copy of the example scripts provided by Xelera decision Tree Inference GitHub repository:
     1. Download script files and flight delay dataset (skip this step if AWS deployment): `/app/setup_flight_delay_example.sh`
         * [script files](https://github.com/xelera-technologies/Tree-Inference/tree/master/scripts)  
