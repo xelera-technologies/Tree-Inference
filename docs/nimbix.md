@@ -13,3 +13,4 @@
         <p align="center">
         <img src="images/nimbix2.png" align="middle" width="500"/>
         </p>
+4. SSH to the created instance: `ssh -i <pem_file>.pem centos@<instance-ip>`

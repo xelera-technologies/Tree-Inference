@@ -39,6 +39,5 @@ docker run \
      -e "TERM=xterm-256color" \
      --mount type=bind,source=${PWD}/$license_file,target=/opt/xelera/license.xlicpak,readonly \
      --name cont-decision-tree-inference-$USER-$timestamp \
-     xeleratechnologies/decision-tree-inference:${tagname} \
-     /bin/bash .
+     xeleratechnologies/decision-tree-inference:${tagname} 
 ```
