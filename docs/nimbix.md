@@ -8,11 +8,11 @@
         <p align="center">
         <img src="images/nimbix0.png" align="middle" width="500"/>
         </p>
-    * Click on “Shell” button in the lower left of the pop-up window
+    * Click on **Shell** button in the lower left of the pop-up window
         <p align="center">
         <img src="images/nimbix1.png" align="middle" width="500"/>
         </p>
-    * Run the Application by setting the License Key File file downloaded earlier on your computer and click on ‘Submit” button
+    * Run the Application by setting the **License Key File** file downloaded earlier on your computer and click on **Submit** button
         <p align="center">
         <img src="images/nimbix2.png" align="middle" width="500"/>
         </p>
