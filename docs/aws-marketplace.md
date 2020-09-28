@@ -3,11 +3,12 @@
 
 0. [Request access](https://xelera.io/survey-aws-ami-xelera-tree-inference-engine) to the Xelera decision Tree Inference Demo AMI
 1. Launch a new EC2 f1.2xlarge Instance using the the Xelera decision Tree Inference Demo AMI.
-2. SSH to the created instance: `ssh -i <pem_file>.pem centos@<instance-ip>`
-3. Start the Container running the script:
+2. SSH to the created instance: `ssh -i <pem-file>.pem centos@<aws-instance-ip>`
+3. Start the Container running `./run_xelera_xemo.sh` or the script below:
+
 
 ```
-tagname="f1.2xlarge-2020.1-0.3.0b3"
+tagname="f1.2xlarge-marketplace-2020.1-0.3.0b3"
 
 user=`whoami`
 timestamp=`date +%Y-%m-%d_%H-%M-%S`

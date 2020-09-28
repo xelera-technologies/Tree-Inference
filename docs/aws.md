@@ -19,14 +19,16 @@
     * `sudo Xilinx_Base_Runtime/utilities/docker_install.sh`
     * `sudo usermod -aG docker centos`
     * log-out and log-in again to the instance
-12. (ONLY THE FIRST TIME YOU RUN THE INSTANCE) Install the FPGA Drivers
-    * git clone https://github.com/aws/aws-fpga.git
-    * source aws-fpga/vitis_runtime_setup.sh   
+12. Check if the FPGA is usable:
+    * Source XRT environment `source /opt/xilinx/xrt/setup.sh`
+    * Run `xbutil scan`
+    * If it's **usable** the following message should appear:  `[0] 0000:00:1d.0 xilinx_aws-vu9p-f1_dynamic_5_0(ID=0xabcd) user(inst=128)`
+    * If it's **not usable**, run `sudo systemctl restart mpd` and check again after a few seconds.
 13. Update `<license-file>` value and start the Container running the script:
 
 ```
 tagname="f1.2xlarge-2020.1-0.3.0b3"
-licenseFile="<license-file>.xlicpak"
+#licenseFile="<license-file>.xlicpak"
 
 user=`whoami`
 timestamp=`date +%Y-%m-%d_%H-%M-%S`
@@ -46,6 +48,8 @@ for i in ${render_driver} ;
 do
   docker_devices+="--device=$i "
 done
+
+source aws-fpga/vitis_setup.sh
 
 docker run \
      -it \
