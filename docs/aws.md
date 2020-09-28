@@ -28,7 +28,7 @@
 
 ```
 tagname="f1.2xlarge-2020.1-0.3.0b3"
-#licenseFile="<license-file>.xlicpak"
+licenseFile="<license-file>.xlicpak"
 
 user=`whoami`
 timestamp=`date +%Y-%m-%d_%H-%M-%S`
