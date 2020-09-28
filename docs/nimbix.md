@@ -16,4 +16,4 @@
         <p align="center">
         <img src="images/nimbix2.png" align="middle" width="500"/>
         </p>
-4. 4. SSH to the launched instance: `ssh nimbix@<nimbix-instance-ip>`
+4. SSH to the launched instance: `ssh nimbix@<nimbix-instance-ip>`
