@@ -36,7 +36,7 @@ Additional resource:
 |            Cards/Platform            |     Shell        |
 | :-------------------------: |:-------------------------: |
 |   [Xilinx Alveo U200](https://www.xilinx.com/products/boards-and-kits/alveo/u200.html) | xilinx-u200-xdma-201830.2 |  
-|   Nimbix nx_u200_202010| xilinx-u200-xdma-201830.2 |  
+|   [Nimbix](https://platform.jarvice.com) nx_u200_202010| xilinx-u200-xdma-201830.2 |  
 |   [AWS f1.2xlarge](https://aws.amazon.com/de/ec2/instance-types/f1/)                     | xilinx_aws-vu9p-f1_shell-v04261818_201920_1 |
 
 ## Features and Limitations
