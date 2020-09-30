@@ -1,8 +1,6 @@
 # AWS marketplace
 
-**NOTE** The AWS Marketplace AMI has been submitted and it is under the review process.
-
-1. Launch a new EC2 f1.2xlarge Instance using the the Xelera decision Tree Inference Demo AMI.
+1. Launch a new **EC2 f1.2xlarge** Instance using the the [Xelera decision Tree Inference Demo AMI](https://aws.amazon.com/marketplace/pp/B08KG7FNV3?qid=1601476507885&sr=0-1&ref_=srh_res_product_title).
 2. SSH to the created instance: `ssh -i <pem-file>.pem centos@<aws-instance-ip>`
 3. Start the Container running `./run_xelera_xemo.sh` or the script below:
 
