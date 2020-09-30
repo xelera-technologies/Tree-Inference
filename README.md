@@ -49,7 +49,7 @@ For supported features and current limitations, see [supported parameters](docs/
 Xelera decision Tree Inference is available:
 * [On-premises](docs/on-premises.md)
 * [Nimbix](docs/nimbix.md)
-* [AWS](docs/aws.md)
+* [AWS](docs/aws-marketplace.md)
 
 #### Get started with examples
 * [Predict the flight delay](docs/exampleFlight.md)
