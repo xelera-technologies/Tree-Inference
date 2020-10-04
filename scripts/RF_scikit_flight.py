@@ -147,14 +147,13 @@ if enable_regression:
         x_nd = np.array(x_test, dtype=np.float32, order='C')
 
         print("Starting HW Inference...")
-        hw_time = 0
+        hw_start_time = time.perf_counter()
         for i in range(nLoops):
-            hw_start_time = time.perf_counter()
-            y_pred = xlrf.predict(x_nd)
-            hw_stop_time = time.perf_counter()
-            hw_time += (hw_stop_time - hw_start_time)
-
-        hw_time =  hw_time/nLoops
+            xlrf.predict(x_nd)
+        for i in range(nLoops):
+            y_pred = xlrf.get_results()
+        hw_stop_time = time.perf_counter()
+        hw_time = (hw_stop_time - hw_start_time)/nLoops
 
         mse=mean_squared_error(y_test, y_pred)
         print("HW mse",np.sqrt(mse))
@@ -268,14 +267,13 @@ if enable_binomial:
 
         x_nd = np.array(x_test, dtype=np.float32, order='C')
         print("Starting HW inference ...")
-        hw_time = 0
+        hw_start_time = time.perf_counter()
         for i in range(nLoops):
-            hw_start_time = time.perf_counter()
-            y_pred = xlrf.predict(x_nd)
-            hw_stop_time = time.perf_counter()
-            hw_time += (hw_stop_time - hw_start_time)
-
-        hw_time =  hw_time / nLoops
+            xlrf.predict(x_nd)
+        for i in range(nLoops):
+            y_pred = xlrf.get_results()
+        hw_stop_time = time.perf_counter()
+        hw_time = (hw_stop_time - hw_start_time)/nLoops
 
         y_pred = y_pred.argmax(1)
         y_pred = model_sk_binomial.classes_.take(y_pred, axis=0)
@@ -410,14 +408,13 @@ if enable_multinomial:
         x_nd = np.array(x_test, dtype=np.float32, order='C')
 
         print("Starting HW inference ...")
-        hw_time = 0
+        hw_start_time = time.perf_counter()
         for i in range(nLoops):
-            hw_start_time = time.perf_counter()           
-            y_pred = xlrf.predict(x_nd)
-            hw_stop_time = time.perf_counter()
-            hw_time += (hw_stop_time - hw_start_time)
-
-        hw_time =  hw_time / nLoops
+            xlrf.predict(x_nd)
+        for i in range(nLoops):
+            y_pred = xlrf.get_results()
+        hw_stop_time = time.perf_counter()
+        hw_time = (hw_stop_time - hw_start_time)/nLoops
 
         y_pred = y_pred.argmax(1)
         y_pred = model_sk_multinomial.classes_.take(y_pred, axis=0)

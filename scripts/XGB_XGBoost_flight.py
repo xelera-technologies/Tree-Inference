@@ -138,13 +138,14 @@ if enable_regression:
         x_test_np = np.array(x_test, dtype=np.float32, order='C')
 
         print("Starting HW inference ...")
-        hw_time = 0
+
+        hw_start_time = time.perf_counter()
         for i in range(nLoops):
-            hw_start_time = time.perf_counter()
-            y_pred = inference_engine.predict(x_test_np)
-            hw_stop_time = time.perf_counter()
-            hw_time += (hw_stop_time - hw_start_time)
-        hw_time = hw_time/nLoops
+            inference_engine.predict(x_test_np)
+        for i in range(nLoops):
+            y_pred = inference_engine.get_results()
+        hw_stop_time = time.perf_counter()
+        hw_time = (hw_stop_time - hw_start_time)/nLoops
 
 
 
@@ -254,13 +255,13 @@ if enable_binomial:
 
         x_test_np = np.array(x_test, dtype=np.float32, order='C')
 
-        hw_time = 0
+        hw_start_time = time.perf_counter()
         for i in range(nLoops):
-            hw_start_time = time.perf_counter()
-            y_pred = inference_engine.predict(x_test_np)
-            hw_stop_time = time.perf_counter()
-            hw_time += (hw_stop_time - hw_start_time)
-        hw_time = hw_time/nLoops
+            inference_engine.predict(x_test_np)
+        for i in range(nLoops):
+            y_pred = inference_engine.get_results()
+        hw_stop_time = time.perf_counter()
+        hw_time = (hw_stop_time - hw_start_time)/nLoops
 
         y_pred = inference_engine.xgb_binary_logistic(y_pred)
 
