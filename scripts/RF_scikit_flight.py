@@ -32,7 +32,7 @@ print("Loading dataset...")
 dataset_name = tree_inference_args.data_fpath
 data_origin = pd.read_csv(dataset_name)
 if (enable_FPGA_inference):
-    import XlPluginRandomForest as xl
+    import XlPluginDecisionTreeInference as xl
 
 data_origin = data_origin.sample(frac = 0.1, random_state=10)
 
@@ -93,10 +93,10 @@ if enable_regression:
 
 
     if enable_FPGA_inference:
-        import XlPluginRandomForest as xl
+        import XlPluginDecisionTreeInference as xl
         start_time = time.perf_counter()
         xlrfsetup = xl.XlRandomForestSetup()
-        model_xlrf_regression = xlrfsetup.getModelForFPGA(model_sk_regression)
+        xlrfsetup.getModelForFPGA(model_sk_regression,"RF_regression_flight.xlmodel")
         del xlrfsetup
         print("HW_formatting_time:      ", time.perf_counter() - start_time, "s")
 
@@ -132,14 +132,14 @@ if enable_regression:
     ######### Inference FPGA ########
 
     if (enable_FPGA_inference):
-        import XlPluginRandomForest as xl
+        import XlPluginDecisionTreeInference as xl
         print("Preparing HW inference...")
 
 
         setup_starttime = time.perf_counter()
 
         xlrf = xl.XlRFInference()
-        xlrf.setModel(model_xlrf_regression)
+        xlrf.setModel("RF_regression_flight.xlmodel")
 
         setup_endtime = time.perf_counter()
         HW_setup_time = setup_endtime - setup_starttime
@@ -214,11 +214,11 @@ if enable_binomial:
     print("Training_time:      ", time.perf_counter() - start_time, "s")
 
     if enable_FPGA_inference:
-        import XlPluginRandomForest as xl
+        import XlPluginDecisionTreeInference as xl
 
         start_time = time.perf_counter()
         xlrfsetup = xl.XlRandomForestSetup()
-        model_xlrf_binomial = xlrfsetup.getModelForFPGA(model_sk_binomial)
+        xlrfsetup.getModelForFPGA(model_sk_binomial,"RF_binomial_flight.xlmodel")
         del xlrfsetup
         print("HW_formatting_time:      ", time.perf_counter() - start_time, "s")
 
@@ -253,14 +253,14 @@ if enable_binomial:
     ######### Inference FPGA ########
 
     if (enable_FPGA_inference):
-        import XlPluginRandomForest as xl
+        import XlPluginDecisionTreeInference as xl
         print("Preparing HW inference ...")
 
 
         setup_starttime = time.perf_counter()
 
         xlrf = xl.XlRFInference()
-        xlrf.setModel(model_xlrf_binomial)
+        xlrf.setModel("RF_binomial_flight.xlmodel")
 
         setup_endtime = time.perf_counter()
         HW_setup_time = setup_endtime - setup_starttime
@@ -354,12 +354,12 @@ if enable_multinomial:
     print("Training_time:      ", time.perf_counter() - start_time, "s")
 
     if enable_FPGA_inference:
-        import XlPluginRandomForest as xl
+        import XlPluginDecisionTreeInference as xl
 
 
         start_time = time.perf_counter()
         xlrfsetup = xl.XlRandomForestSetup()
-        model_xlrf_multinomial = xlrfsetup.getModelForFPGA(model_sk_multinomial)
+        xlrfsetup.getModelForFPGA(model_sk_multinomial,"RF_multinomial_flight.xlmodel")
         del xlrfsetup
         print("HW_formatting_time:      ", time.perf_counter() - start_time, "s")
 
@@ -393,14 +393,14 @@ if enable_multinomial:
     ######### Inference FPGA ########
 
     if (enable_FPGA_inference):
-        import XlPluginRandomForest as xl
+        import XlPluginDecisionTreeInference as xl
 
         print("Preparing HW inference ...")
 
         setup_starttime = time.perf_counter()
 
         xlrf = xl.XlRFInference()
-        xlrf.setModel(model_xlrf_multinomial)
+        xlrf.setModel("RF_multinomial_flight.xlmodel")
 
         setup_endtime = time.perf_counter()
         HW_setup_time = setup_endtime - setup_starttime

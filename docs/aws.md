@@ -27,7 +27,7 @@
 13. Update `<license-file>` value and start the Container running the script:
 
 ```
-tagname="f1.2xlarge-2020.1-0.3.0b3"
+tagname="f1.2xlarge-2020.1-0.4.0b4"
 licenseFile="<license-file>.xlicpak"
 
 user=`whoami`

@@ -69,7 +69,7 @@ We will exercise this example using the [flight-delays](https://www.kaggle.com/u
 If you want to see the whole picture, look at the scripts in the [scripts](../scripts/)  folder.
 Use the built in ```help``` function to explore the python library. As example, enter python3 and run:
 ```
-import XlPluginRandomForest as xl
+import XlPluginDecisionTreeInference as xl
 help(xl.XlRFInference)
 ```
 to see the help information about `XlRFInference`.
@@ -95,7 +95,7 @@ These parameters do not yield optimal results on the estimation, but rather serv
 Start by importing the python library of the Inference Engine:
 ```python
 
-    import XlPluginRandomForest as xl
+    import XlPluginDecisionTreeInference as xl
 ```
 
 Additionally, import the packages required for data handling and time measurings:
@@ -209,33 +209,30 @@ Next, we want to retrieve the model tuple from the created ```setup``` instance.
 - sk-learn:
 
     ```python
-    model_fpga = setup.getModelForFPGA(model)
+    setup.getModelForFPGA(model,"myModelName.xlmodel")
     ```
 
-    sk-learn provides all required information in the RandomForestRegressor (RandomForestClassifier resp.) object, so that it is the only parameter.
+    sk-learn provides all required information in the RandomForestRegressor (RandomForestClassifier resp.) object. `myModelName.xlmodel` is the file name of the returned saved model (`.xlmodel` format) for FPGA
 
 - XGBoost:
 
     ```python
-    model_fpga = setup.getModelForFPGA(model.get_booster(), max_depth, num_classes, feature_names)
+    setup.getModelForFPGA(model.get_booster(), max_depth, num_classes, feature_names, "myModelName.xlmodel")
     ```
 
     XGBoost does not provide all information required for the FPGA engine in the booster, so we need to pass the maximum depth of trees, number of classes and feature names (list) additionally.
-    In case of regression, set num_classes to 1.
+    In case of regression, set num_classes to 1. `myModelName.xlmodel` is the file name of the returned saved model (`.xlmodel` format) for FPGA
 
 - LightGBM:
 
     ```python
     json_dump = json.dumps(model.booster_.dump_model())
-    model_fpga = setup.getModelForFPGA(json_dump, max_depth)
+    setup.getModelForFPGA(json_dump, max_depth, "myModelName.xlmodel")
     ```
 
-    The LightGBM setup class requires a json dump of the LightGBM model and the maximum tree depth.
+    The LightGBM setup class requires a json dump of the LightGBM model and the maximum tree depth. 
+    `myModelName.xlmodel` is the file name of the returned saved model (`.xlmodel` format) for FPGA
 
-
-**Note:** The tuple can be stored to a file using ```pickle```, so that setup and inference phase can be separated.
-
-**Note:** In the current release, you must run the setup of the FPGA model on a system which access to the same FPGA (and only that type) as you will perform the inference on. This is required because the encoded model is created according to the used device.
 
 ##### FPGA Inference
 
@@ -243,8 +240,8 @@ Next is the actual inference. This is equal for all three frameworks. First, we 
 
 ```python
 
-    engine = xl.XlRfInference()
-    engine.setModel(model_fpga)
+    inference_engine = xl.XlRfInference()
+    inference_engine.setModel("myModelName.xlmodel")
 
 ```
 
@@ -254,21 +251,19 @@ Our samples to infer are a ```numpy.ndarray``` with the shape ```(numSamples, nu
 ```
 
  Additionally, we measure the time over a number of iterations to get an average:
+ 
 
 ```python
-    time_total_fpga = 0
-    for n in range(nLoops):
-        start_time = time.perf_counter()
-
-        # actual prediction call:
-        predictions_fpga = engine.predict(samples)
-
-        end_time = time.perf_counter()
-        time_total_fpga = += (end_time - start_time)
-    time_total_fpga /= nLoops
-
+    hw_start_time = time.perf_counter()
+    for i in range(nLoops):
+        # non-blocking call
+        xlrf.predict(x_nd)
+    for i in range(nLoops):
+        # blocking call
+        y_pred = xlrf.get_results()
+    hw_stop_time = time.perf_counter()
+    hw_time = (hw_stop_time - hw_start_time)/nLoops
 ```
-
 
 
 ##### Comparison

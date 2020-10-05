@@ -33,7 +33,7 @@ print("Loading dataset ...")
 dataset_name = tree_inference_args.data_fpath
 data_origin = pd.read_csv(dataset_name)
 if (enable_FPGA_inference):
-    import XlPluginRandomForest as xl
+    import XlPluginDecisionTreeInference as xl
 
 data_origin = data_origin.sample(frac = 0.1, random_state=10)
 
@@ -95,7 +95,7 @@ if enable_regression:
     if (enable_FPGA_inference):
         xlSetup = xl.XlXGBSetup()
         num_classes = 1
-        fpga_model_regression = xlSetup.getModelForFPGA(model_regression.get_booster(), max_depth, num_classes, feature_names)
+        xlSetup.getModelForFPGA(model_regression.get_booster(), max_depth, num_classes, feature_names,"XGB_regression_flight.xlmodel")
 
 
 
@@ -133,7 +133,7 @@ if enable_regression:
         print("Preparing HW inference ...")
 
         inference_engine = xl.XlRFInference()
-        inference_engine.setModel(fpga_model_regression)
+        inference_engine.setModel("XGB_regression_flight.xlmodel")
 
         x_test_np = np.array(x_test, dtype=np.float32, order='C')
 
@@ -214,7 +214,7 @@ if enable_binomial:
     if (enable_FPGA_inference):
         xlSetup = xl.XlXGBSetup()
         num_classes = 2
-        fpga_model_binomial = xlSetup.getModelForFPGA(model_binomial.get_booster(), max_depth, num_classes, feature_names)
+        xlSetup.getModelForFPGA(model_binomial.get_booster(), max_depth, num_classes, feature_names, "XGB_binomial_flight.xlmodel")
 
 
 
@@ -251,7 +251,7 @@ if enable_binomial:
 
 
         inference_engine = xl.XlRFInference()
-        inference_engine.setModel(fpga_model_binomial)
+        inference_engine.setModel("XGB_binomial_flight.xlmodel")
 
         x_test_np = np.array(x_test, dtype=np.float32, order='C')
 

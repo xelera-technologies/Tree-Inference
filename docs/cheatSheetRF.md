@@ -12,10 +12,12 @@ help(xl.XlRFInference)
 
 ```
 xlSetup = xl.XlRandomForestSetup()
-fpga_model = xlSetup.getModelForFPGA(model)
+xlSetup.getModelForFPGA(model,"myModelRF.xlmodel")
 del xlSetup
 ```
-where `model` is a trained scikit-learn Random Forest model which shall be inferred. A trained model (`fpga_model`) prepared for FPGA is returned.
+where:
+* `model` is a trained scikit-learn Random Forest model which shall be inferred. 
+* `myModelRF.xlmodel` is the file name of the returned saved model (`.xlmodel` format) for FPGA
 
 ### Run inference (prediction) on FPFA
 
@@ -26,14 +28,19 @@ inference_engine = xl.XlRFInference()
 
 Load the trained model into FPGA
 ```
-inference_engine.setModel(fpga_model)
+inference_engine.setModel("myModelRF.xlmodel")
 ```
 
-Run the prediction on FPGA
+Run the prediction on FPGA (non-blocking python call)
 ```
-predictions = inference_engine.predict(X_test)
+inference_engine.predict(X_test)
 ```
-where `X_test` is a `numpy.ndarray` of the input samples. Predictions are returned.
+where `X_test` is a `numpy.ndarray` of the input samples.
+
+Get the prediction from FPGA (blocking python call)
+```
+predictions = inference_engine.get_results()
+```
 
 Shutdown
 ```

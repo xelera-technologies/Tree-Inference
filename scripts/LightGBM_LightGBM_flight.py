@@ -88,11 +88,11 @@ if enable_regression:
     print("Training_time:      ", time.perf_counter() - start_time, "s")
     
     if (enable_FPGA_inference):
-        import XlPluginRandomForest as xl 
+        import XlPluginDecisionTreeInference as xl 
         xlSetup = xl.XlLightGBMSetup()
         bdump = model_regression.booster_.dump_model()
         jsonModelDump = json.dumps(bdump)
-        fpga_model_regression = xlSetup.getModelForFPGA(jsonModelDump, max_depth)
+        xlSetup.getModelForFPGA(jsonModelDump, max_depth, "LightGBM_regression_flight.xlmodel")
 
     ######### Inference SW ########
 
@@ -117,12 +117,12 @@ if enable_regression:
     ######## Inference FPGA ############
 
     if enable_FPGA_inference:
-        import XlPluginRandomForest as xl
+        import XlPluginDecisionTreeInference as xl
         print("Preparing HW inference ...")
 
 
         inference_engine = xl.XlRFInference()
-        inference_engine.setModel(fpga_model_regression)
+        inference_engine.setModel("LightGBM_regression_flight.xlmodel")
 
 
         x_test_np = np.array(x_test, dtype=np.float32, order='C')
@@ -207,11 +207,11 @@ if (enable_binomial):
 
     model_fpga_binomial = "no_model"
     if (enable_FPGA_inference):
-        import XlPluginRandomForest as xl 
+        import XlPluginDecisionTreeInference as xl 
 
         xlSetup = xl.XlLightGBMSetup()
         jsonModelDump = json.dumps(bdump)
-        model_fpga_binomial = xlSetup.getModelForFPGA(jsonModelDump, max_depth)
+        xlSetup.getModelForFPGA(jsonModelDump, max_depth, "LightGBM_binomial_flight.xlmodel")
 
             
 
@@ -237,10 +237,10 @@ if (enable_binomial):
     ######## Inference FPGA ############
 
     if enable_FPGA_inference:
-        import XlPluginRandomForest as xl
+        import XlPluginDecisionTreeInference as xl
 
         inference_engine = xl.XlRFInference()
-        inference_engine.setModel(model_fpga_binomial)
+        inference_engine.setModel("LightGBM_binomial_flight.xlmodel")
 
 
         x_test_np = np.array(x_test, dtype=np.float32, order='C')

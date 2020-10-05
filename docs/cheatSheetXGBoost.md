@@ -11,7 +11,7 @@ help(xl.XlRFInference)
 
 ```
 xlSetup = xl.XlXGBSetup()
-fpga_model = xlSetup.getModelForFPGA(model.get_booster(), max_depth, num_classes, feature_names)
+xlSetup.getModelForFPGA(model.get_booster(), max_depth, num_classes, feature_names,"myModelXGB.xlmodel")
 del xlSetup
 ```
 where:
@@ -19,8 +19,7 @@ where:
 * `num_classes` is the number of classes which shall be inferred. 1 in case of regression, 2 in case of binomial classification, n>2 in case of multi-class classification
 * `max_depth` is the maximum depth of the trees in booster
 * `feature_names` is the list of feature names
-
-A trained model (`fpga_model`) prepared for FPGA is returned.
+* `myModelXGB.xlmodel` is the file name of the returned saved model (`.xlmodel` format) for FPGA
 
 
 ### Run inference (prediction) on FPFA
@@ -32,14 +31,19 @@ inference_engine = xl.XlRFInference()
 
 Load the trained model into FPGA
 ```
-inference_engine.setModel(fpga_model)
+inference_engine.setModel("myModelXGB.xlmodel")
 ```
 
-Run the prediction on FPGA
+Run the prediction on FPGA (non-blocking python call)
 ```
-predictions = inference_engine.predict(X_test)
+inference_engine.predict(X_test)
 ```
-where `X_test` is a `numpy.ndarray` of the input Samples. Predictions are returned.
+where `X_test` is a `numpy.ndarray` of the input samples.
+
+Get the prediction from FPGA (blocking python call)
+```
+predictions = inference_engine.get_results()
+```
 
 Shutdown
 ```

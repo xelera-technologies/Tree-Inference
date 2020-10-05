@@ -14,22 +14,18 @@ Additional resource:
 ## What's New
 [Release notes](docs/releaseNotes.md)
 * Supported algorithms:
-    * Random Forest
-        * Regression
-        * Classification (Binomial and Multinomial)
     * XGBoost
-        * Regression
-        * Classification (Binomial)
+        * Classification (Binomial and Multinomial on selected Alveo cards)
     * LightGBM
-        * Regression
-        * Classification (Binomial)
+        * Classification (Binomial and Multinomial on selected Alveo cards)
 * Supported frameworks:
     * scikit-learn
     * XGBboost
     * LightGBM
-* Python interface
-* Single model inference
-* Latency optimized inference (no throughput mode)
+* Latency optimized inference
+* Python interface with non-blocking calls
+* Inference server with a single FPGA card
+* License support
 
 ## Acceleration Platforms
 
