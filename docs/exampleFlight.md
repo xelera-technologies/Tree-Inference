@@ -43,7 +43,7 @@ Run the Random Forest multinomial classification with 100 trees and 1000 samples
 
 ###### XGBoost regression inference on HW only (example)
 Run the XGBoost regression with 100 trees and 1000 samples using
-`python3 scripts/demo_FPGA_XGB_regerssion_flight.py --data_fpath /app/xelera_demo/data/flight-delays/flights.csv --number_of_trees 100 --num_test_samples 1000` You will be prompted the accurracy and throughtput measures for FPGA (HW) inference runs.
+`python3 scripts/demo_FPGA_XGB_regression_flight.py --data_fpath /app/xelera_demo/data/flight-delays/flights.csv --number_of_trees 100 --num_test_samples 1000` You will be prompted the accurracy and throughtput measures for FPGA (HW) inference runs.
 
 #### Step-by-Step Guide
 
