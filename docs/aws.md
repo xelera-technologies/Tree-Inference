@@ -1,7 +1,7 @@
 # AWS [Deprecated]
 
 
-0. [Request License](https://xelera.io/product/demo-license-requests) for the Xelera decision Tree Inference Docker Image and download the License Key File `<license-file>.xlicpak`
+0. [Request a License](https://xelera.io/product/demo-license-requests) for the Xelera decision Tree Inference Docker Image and download the License Key File `<license-file>.xlicpak`
 1. Login to AWS web console and [launch instance wizard](https://console.aws.amazon.com/ec2/v2/home?region=us-east-1#LaunchInstanceWizard)
 2. Choose an Amazon Machine Image (AMI): **FPGA Developer AMI**
 3. Choose an Instance Type: **f1.2xlarge**
