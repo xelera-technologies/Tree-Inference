@@ -39,11 +39,11 @@ See the following table for experiment arguments:
 
 ###### Random Forest multinomial classification inference on SW and HW (example)
 
-Run the Random Forest multinomial classification with 100 trees and 1000 samples using `python3 scripts/RF_scikit_flight.py --data_fpath /app/xelera_demo/data/flight-delays/flights.csv --enable_multinomial true --enable_regression false --number_of_trees 100 --num_test_samples 1000`. You will be prompted the accurracy and latency measures for CPU (SW) and FPGA (HW) inference runs. Note that training and execution in software might take some time.
+Run the Random Forest multinomial classification with 100 trees and 1000 samples using `python3 scripts/RF_scikit_flight.py --data_fpath /app/xelera_demo/data/flight-delays/flights.csv --enable_regression false --enable_binomial false  --enable_multinomial true --enable_SW_inference true --enable_FPGA_inference true --number_of_trees 100 --num_test_samples 1000`. You will be prompted the accurracy and latency measures for CPU (SW) and FPGA (HW) inference runs. Note that training and execution in software might take some time.
 
-###### Random Forest multinomial classification inference on HW only (example)
-
-Run the Random Forest multinomial classification with 100 trees and 1000 samples using `python3 scripts/RF_scikit_flight.py --data_fpath /app/xelera_demo/data/flight-delays/flights.csv --enable_SW_inference false --enable_multinomial true --enable_regression false --number_of_trees 100 --num_test_samples 1000`. You will be prompted the accurracy and latency measures for FPGA (HW) inference runs.
+###### XGBoost regression inference on HW only (example)
+Run the XGBoost regression with 100 trees and 1000 samples using
+`python3 scripts/demo_FPGA_XGB_regerssion_flight.py --data_fpath /app/xelera_demo/data/flight-delays/flights.csv --number_of_trees 100 --num_test_samples 1000` You will be prompted the accurracy and throughtput measures for FPGA (HW) inference runs.
 
 #### Step-by-Step Guide
 

@@ -8,10 +8,17 @@
 3. Install Docker (if not installed yet)
     1. `cd Xilinx_Base_Runtime/utilities`
     2. `./docker_install.sh`
-4. Update `<license-file>` value and start the Container running the script:
+4. Update `<license-file>` and `<tag-name>` values (a list of Docker images is available on [Xelera Technologies Docker Hub](https://hub.docker.com/r/xeleratechnologies/decision-tree-inference) page). The latest tags are:
+
+|            Cards/Platform            |     Tag        |
+| :------------------------- |:------------------------- |
+|   Xilinx Alveo U50| u50-2020.1-0.4.0b4 | 
+|   Xilinx Alveo U200| u200-2020.1-0.4.0b4 | 
+
+5. Start the Container running the script:
 
 ```
-tagname="u200-2020.1-0.4.0b4"
+tagname="<tag-name>"
 licenseFile="<license-file>.xlicpak"
 
 user=`whoami`

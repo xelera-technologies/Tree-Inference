@@ -1,4 +1,4 @@
-# AWS
+# AWS [Deprecated]
 
 
 0. [Request License](https://xelera.io/product/demo-license-requests) for the Xelera decision Tree Inference Docker Image and download the License Key File `<license-file>.xlicpak`
@@ -27,7 +27,7 @@
 13. Update `<license-file>` value and start the Container running the script:
 
 ```
-tagname="f1.2xlarge-2020.1-0.4.0b4"
+tagname="f1.2xlarge-2020.1-0.3.0b3"
 licenseFile="<license-file>.xlicpak"
 
 user=`whoami`

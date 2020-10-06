@@ -4,7 +4,7 @@
 1. [Request License](https://xelera.io/product/demo-license-requests) for the Xelera decision Tree Inference Docker Image and download the License Key File `<license-file>.xlicpak`
 2. Sign up for Nimbix Service: https://www.nimbix.net/alveotrial
 3. Application Execution
-    * Search and click on **Decision Tree Inference** on the Nimbix application list
+    * Search and click on Nimbix application list **"Decision Tree Inference"** on Alveo U50 or Alveo U200
         <p align="center">
         <img src="images/nimbix0.png" align="middle" width="500"/>
         </p>
