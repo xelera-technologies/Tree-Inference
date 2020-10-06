@@ -2,13 +2,13 @@
 
 **Xelera Decision Tree Inference** provides FPGA-accelerated inference (prediction) for real-time Classification and Regression applications when high-throughput or low-latency matters. It supports **Random Forest**, **XGBoost** and **LightGBM** algorithms.
 
-1. Train your own model using one of the supported frameworks (**scikit-learn**, **XGBoost**, **LightGBM**, **H20.ai**) and Ccnvert it to a unified representation (XlModel) for Alveo Accelerator Cards
+1. Train your own model using one of the supported frameworks (**scikit-learn**, **XGBoost**, **LightGBM**, **H20.ai**) and convert it to a unified representation (XlModel) for Alveo Accelerator Cards
 
 <p align="center">
 <img src="docs/images/flow0.png" align="middle" width="500"/>
 </p>
 
-2. Integrate with your application via Python and Run auto-scalable inference server
+2. Integrate with your application via Python and run with an auto-scalable inference server
 
 <p align="center">
 <img src="docs/images/flow1.png" align="middle" width="500"/>
@@ -61,6 +61,10 @@ Xelera Decision Tree Inference is available:
 * [Random Forest](docs/cheatSheetRF.md)
 * [XGBoost](docs/cheatSheetXGBoost.md)
 * [LightGBM](docs/cheatSheetLightGBM.md)
+
+## API changes
+
+See [API migration](docs/migration.md) for instructions to migrate to the updated API of this release.
 
 ## Contacts
 
