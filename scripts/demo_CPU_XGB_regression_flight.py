@@ -87,7 +87,8 @@ finally:
 
 start_time = time.perf_counter()
 for i in range(nLoops):
-    y_pred = model.predict(x_test)
+    # To avoid caching and to have more accurate performance numbers, pass a new array every time
+    y_pred = model.predict(x_test + i)
 stop_time = time.perf_counter()
 execution_time = stop_time-start_time
 

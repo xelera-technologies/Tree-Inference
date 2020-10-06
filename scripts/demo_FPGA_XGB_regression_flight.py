@@ -110,7 +110,8 @@ except:
 start_time = time.perf_counter()
 x_test_np = np.array(x_test, dtype=np.float32, order='C')
 for i in range(nLoops):
-    inference_engine.predict(x_test_np)
+    # To avoid caching and to have more accurate performance numbers, pass a new array every time 
+    inference_engine.predict(x_test_np + i)
 for i in range(nLoops):
     y_pred = inference_engine.get_results()
 stop_time = time.perf_counter()
