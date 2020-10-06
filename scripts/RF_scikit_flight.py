@@ -56,6 +56,9 @@ if enable_regression:
     print("################################################")
     print("RF Regression with Numerical Features")
 
+    modelFileName = "./RF_Regression_Flight_" + str(number_of_trees) + "trees.pkl"
+    modelFPGAFileName = "./RF_Regression_Flight_" + str(number_of_trees) + "trees.xlmodel"
+
     data = data_origin.copy()
 
 
@@ -86,19 +89,25 @@ if enable_regression:
 
     #set "n_estimators": 300 to get good results
     model_sk_regression = skrfr(max_depth=max_depth,n_estimators=number_of_trees, n_jobs=32, random_state=1234)
-    start_time = time.perf_counter()
-    model_sk_regression.fit(x_train, y_train)
+    
+    if (os.path.isfile(modelFileName)):
+        print("Model is already available. Training is NOT run")
+    else:
+        print("Model is not available, start training ...")
+    
+        start_time = time.perf_counter()
+        model_sk_regression.fit(x_train, y_train)
 
-    print("Training_time:      ", time.perf_counter() - start_time, "s")
+        print("Training_time:      ", time.perf_counter() - start_time, "s")
+        pickle.dump(model_sk_regression, open(modelFileName, 'wb'))
+        
 
-
-    if enable_FPGA_inference:
         import XlPluginDecisionTreeInference as xl
         start_time = time.perf_counter()
         xlrfsetup = xl.XlRandomForestSetup()
-        xlrfsetup.getModelForFPGA(model_sk_regression,"RF_regression_flight.xlmodel")
+        xlrfsetup.getModelForFPGA(model_sk_regression,modelFPGAFileName)
         del xlrfsetup
-        print("HW_formatting_time:      ", time.perf_counter() - start_time, "s")
+        print("model conversion to .xlmodel time:", time.perf_counter() - start_time, "s")
 
 
 
@@ -108,14 +117,21 @@ if enable_regression:
         
         sw_time = 0
         print("Starting SW inference...")
-        
-        for i in range(nLoops):
-            sw_start_time = time.perf_counter()
-            y_pred = model_sk_regression.predict(x_test)
-            sw_stop_time = time.perf_counter()
-            sw_time += (sw_stop_time - sw_start_time)
 
-        sw_time = sw_time/nLoops
+        try:
+            f = open(modelFileName, 'rb')
+            model_sk_regression = pickle.load(f)
+        except IOError:
+            print("File",modelFileName," not accessible")
+        finally:
+            f.close()
+
+        #throughput and latency measure
+        start_time = time.perf_counter()
+        for i in range(nLoops):
+            y_pred = model_sk_regression.predict(x_test+i)
+        stop_time = time.perf_counter()
+        sw_time = stop_time - start_time
 
         mse=mean_squared_error(y_test, y_pred)
 
@@ -124,7 +140,8 @@ if enable_regression:
         print(y_pred)
         error = abs(y_test - y_pred)
         print("SW error",error.mean())
-        print('SW predict time (average on', nLoops,'runs for', y_pred.size, 'samples): ', sw_time, 's')
+        print('SW predict latency (average on', nLoops,'runs for', y_pred.size, 'samples): ', "{:.2e}".format(sw_time/nLoops), 's')
+        print("SW predict throughput:", "{:.2e}".format(nLoops*y_pred.size/sw_time), "samples/s")
         print("SW Number of features:",x_test.shape[1])
         print("SW Number of trees:",number_of_trees)
 
@@ -133,35 +150,42 @@ if enable_regression:
 
     if (enable_FPGA_inference):
         import XlPluginDecisionTreeInference as xl
-        print("Preparing HW inference...")
-
 
         setup_starttime = time.perf_counter()
 
         xlrf = xl.XlRFInference()
-        xlrf.setModel("RF_regression_flight.xlmodel")
+        xlrf.setModel(modelFPGAFileName)
 
         setup_endtime = time.perf_counter()
         HW_setup_time = setup_endtime - setup_starttime
 
         x_nd = np.array(x_test, dtype=np.float32, order='C')
 
-        print("Starting HW Inference...")
-        hw_start_time = time.perf_counter()
+        print("Starting HW inference ...")
+        #throughput measure
+        start_time = time.perf_counter()
         for i in range(nLoops):
-            xlrf.predict(x_nd)
+            xlrf.predict(x_nd+i)
         for i in range(nLoops):
             y_pred = xlrf.get_results()
-        hw_stop_time = time.perf_counter()
-        hw_time = (hw_stop_time - hw_start_time)/nLoops
+        stop_time = time.perf_counter()
+        hw_time_throughput = stop_time - start_time
+
+        #latency measure
+        start_time = time.perf_counter()
+        for i in range(nLoops):
+            xlrf.predict(x_nd+i)
+        for i in range(nLoops):
+            y_pred = xlrf.get_results()
+        stop_time = time.perf_counter()
+        hw_time_latency = stop_time - start_time
 
         mse=mean_squared_error(y_test, y_pred)
         print("HW mse",np.sqrt(mse))
         error = abs(y_test - y_pred)
         print("HW error",error.mean())
-        print('HW predict time (average on', nLoops,'runs for', y_pred.size, 'samples): ', hw_time, 's')
-        if enable_SW_inference:
-            print('HW vs.SW speedup: ', sw_time/hw_time, 'X')
+        print('HW predict latency (average on', nLoops,'runs for', y_pred.size, 'samples): ', "{:.2e}".format(hw_time_latency/nLoops), 's')
+        print("HW predict throughput:", "{:.2e}".format(nLoops*y_pred.size/hw_time_throughput), "samples/s")
         print("HW Number of features:",x_test.shape[1])
         print("HW Number of trees:",number_of_trees)
         del xlrf
@@ -174,6 +198,9 @@ if enable_binomial:
 
     print("##############################################")
     print("RF Binomial with Numerical Features")
+
+    modelFileName = "./RF_Binomial_Flight_" + str(number_of_trees) + "trees.pkl"
+    modelFPGAFileName = "./RF_Binomial_Flight_" + str(number_of_trees) + "trees.xlmodel"
 
     data = data_origin.copy()
 
@@ -209,18 +236,23 @@ if enable_binomial:
     #set iterations= 500 to get good results
     model_sk_binomial = skrfc(max_depth=max_depth,n_estimators=number_of_trees, n_jobs=32, random_state=1234)
 
-    start_time = time.perf_counter()
-    model_sk_binomial.fit(x_train,y_train)
-    print("Training_time:      ", time.perf_counter() - start_time, "s")
+    if (os.path.isfile(modelFileName)):
+        print("Model is already available. Training is NOT run")
+    else:
+        print("Model is not available, start training ...")
 
-    if enable_FPGA_inference:
+        start_time = time.perf_counter()
+        model_sk_binomial.fit(x_train,y_train)
+        print("Training_time:      ", time.perf_counter() - start_time, "s")
+        pickle.dump(model_sk_binomial, open(modelFileName, 'wb'))
+
         import XlPluginDecisionTreeInference as xl
 
         start_time = time.perf_counter()
         xlrfsetup = xl.XlRandomForestSetup()
-        xlrfsetup.getModelForFPGA(model_sk_binomial,"RF_binomial_flight.xlmodel")
+        xlrfsetup.getModelForFPGA(model_sk_binomial,modelFPGAFileName)
         del xlrfsetup
-        print("HW_formatting_time:      ", time.perf_counter() - start_time, "s")
+        print("model conversion to .xlmodel time:", time.perf_counter() - start_time, "s")
 
 
     ######### Inference SW ########
@@ -229,14 +261,20 @@ if enable_binomial:
 
         print("Starting SW inference ...")
 
-        sw_time = 0
-        for i in range(nLoops):
-            sw_start_time = time.perf_counter()
-            y_pred = model_sk_binomial.predict(x_test)
-            sw_stop_time = time.perf_counter()
-            sw_time += (sw_stop_time - sw_start_time)
+        try:
+            f = open(modelFileName, 'rb')
+            model_sk_binomial = pickle.load(f)
+        except IOError:
+            print("File",modelFileName," not accessible")
+        finally:
+            f.close()
 
-        sw_time = sw_time/nLoops
+        #throughput and latency measure
+        start_time = time.perf_counter()
+        for i in range(nLoops):
+            y_pred = model_sk_binomial.predict(x_test+i)
+        stop_time = time.perf_counter()
+        sw_time = stop_time - start_time
 
         mse=mean_squared_error(y_test, y_pred)
 
@@ -244,7 +282,8 @@ if enable_binomial:
         error = abs(y_test - y_pred)
         print("SW error",error.mean())
         print("SW accuracy score",accuracy_score(y_test, y_pred))
-        print('SW predict time (average on', nLoops,'runs for', y_pred.size, 'samples): ', sw_time, 's')
+        print('SW predict latency (average on', nLoops,'runs for', y_pred.size, 'samples): ', "{:.2e}".format(sw_time/nLoops), 's')
+        print("SW predict throughput:", "{:.2e}".format(nLoops*y_pred.size/sw_time), "samples/s")
         print("SW Number of features:",x_test.shape[1])
         print("SW Number of trees:",number_of_trees)
         print("SW Number of classes:",model_sk_binomial.classes_.shape[0])
@@ -254,26 +293,34 @@ if enable_binomial:
 
     if (enable_FPGA_inference):
         import XlPluginDecisionTreeInference as xl
-        print("Preparing HW inference ...")
-
 
         setup_starttime = time.perf_counter()
 
         xlrf = xl.XlRFInference()
-        xlrf.setModel("RF_binomial_flight.xlmodel")
+        xlrf.setModel(modelFPGAFileName)
 
         setup_endtime = time.perf_counter()
         HW_setup_time = setup_endtime - setup_starttime
 
         x_nd = np.array(x_test, dtype=np.float32, order='C')
         print("Starting HW inference ...")
-        hw_start_time = time.perf_counter()
+        #throughput measure
+        start_time = time.perf_counter()
         for i in range(nLoops):
-            xlrf.predict(x_nd)
+            xlrf.predict(x_nd+i)
         for i in range(nLoops):
             y_pred = xlrf.get_results()
-        hw_stop_time = time.perf_counter()
-        hw_time = (hw_stop_time - hw_start_time)/nLoops
+        stop_time = time.perf_counter()
+        hw_time_throughput = stop_time - start_time
+
+        #latency measure
+        start_time = time.perf_counter()
+        for i in range(nLoops):
+            xlrf.predict(x_nd+i)
+        for i in range(nLoops):
+            y_pred = xlrf.get_results()
+        stop_time = time.perf_counter()
+        hw_time_latency = stop_time - start_time
 
         y_pred = y_pred.argmax(1)
         y_pred = model_sk_binomial.classes_.take(y_pred, axis=0)
@@ -286,9 +333,8 @@ if enable_binomial:
         error = abs(y_test - y_pred)
         print("HW error",error.mean())
         print("HW accuracy score",accuracy_score(y_test, y_pred))
-        print('HW predict time (average on', nLoops,'runs for', y_pred.size, 'samples): ', hw_time, 's')
-        if enable_SW_inference:
-            print('HW vs.SW speedup: ', sw_time/hw_time, 'X')
+        print('HW predict latency (average on', nLoops,'runs for', y_pred.size, 'samples): ', "{:.2e}".format(hw_time_latency/nLoops), 's')
+        print("HW predict throughput:", "{:.2e}".format(nLoops*y_pred.size/hw_time_throughput), "samples/s")
         print("HW Number of features:",x_test.shape[1])
         print("HW Number of trees:",number_of_trees)
         print("HW Number of classes:",model_sk_binomial.classes_.shape[0])
@@ -305,6 +351,8 @@ if enable_multinomial:
     print("##############################################")
     print("RF Multinomial with Numerical Features")
 
+    modelFileName = "./RF_Multinomial_Flight_" + str(number_of_trees) + "trees.pkl"
+    modelFPGAFileName = "./RF_Multinomial_Flight_" + str(number_of_trees) + "trees.xlmodel"
 
     data = data_origin.copy()
 
@@ -323,8 +371,6 @@ if enable_multinomial:
     data['ARRIVAL_DELAY'] = np.where((data['ARRIVAL_DELAY']>6 ) & (data['ARRIVAL_DELAY']<=7), 7, data['ARRIVAL_DELAY'])
     data['ARRIVAL_DELAY'] = np.where((data['ARRIVAL_DELAY']>7 ) & (data['ARRIVAL_DELAY']<=8), 8, data['ARRIVAL_DELAY'])
     data['ARRIVAL_DELAY'] = np.where(data['ARRIVAL_DELAY'] > 8, 9, data['ARRIVAL_DELAY'])
-
-
 
     data_label = data["ARRIVAL_DELAY"] + 0
     # data_label = data["ARRIVAL_DELAY"].astype("category").cat.codes +1
@@ -349,19 +395,25 @@ if enable_multinomial:
     #set iterations= 500 to get good results
     model_sk_multinomial = skrfc(max_depth=max_depth,n_estimators=number_of_trees, n_jobs=32, random_state=1234)
 
-    start_time = time.perf_counter()
-    model_sk_multinomial.fit(x_train,y_train)
-    print("Training_time:      ", time.perf_counter() - start_time, "s")
+    if (os.path.isfile(modelFileName)):
+        print("Model is already available. Training is NOT run")
+    else:
+        print("Model is not available, start training ...")
 
-    if enable_FPGA_inference:
+        start_time = time.perf_counter()
+        model_sk_multinomial.fit(x_train,y_train)
+        print("Training_time:      ", time.perf_counter() - start_time, "s")
+        pickle.dump(model_sk_multinomial, open(modelFileName, 'wb'))
+
+        # if enable_FPGA_inference:
         import XlPluginDecisionTreeInference as xl
 
 
         start_time = time.perf_counter()
         xlrfsetup = xl.XlRandomForestSetup()
-        xlrfsetup.getModelForFPGA(model_sk_multinomial,"RF_multinomial_flight.xlmodel")
+        xlrfsetup.getModelForFPGA(model_sk_multinomial,modelFPGAFileName)
         del xlrfsetup
-        print("HW_formatting_time:      ", time.perf_counter() - start_time, "s")
+        print("model conversion to .xlmodel time:", time.perf_counter() - start_time, "s")
 
 
     ######### Inference SW ########
@@ -370,14 +422,20 @@ if enable_multinomial:
 
         print("Starting SW inference ...")
 
-        sw_time = 0
-        for i in range(nLoops):
-            sw_start_time = time.perf_counter()
-            y_pred = model_sk_multinomial.predict(x_test)
-            sw_stop_time = time.perf_counter()
-            sw_time += (sw_stop_time - sw_start_time)
+        try:
+            f = open(modelFileName, 'rb')
+            model_sk_multinomial = pickle.load(f)
+        except IOError:
+            print("File",modelFileName," not accessible")
+        finally:
+            f.close()
 
-        sw_time = sw_time / nLoops
+        #throughput and latency measure
+        start_time = time.perf_counter()
+        for i in range(nLoops):
+            y_pred = model_sk_multinomial.predict(x_test+i)
+        stop_time = time.perf_counter()
+        sw_time = stop_time - start_time
 
         mse=mean_squared_error(y_test, y_pred)
 
@@ -385,7 +443,8 @@ if enable_multinomial:
         error = abs(y_test - y_pred)
         print("SW error",error.mean())
         print("SW accuracy score",accuracy_score(y_test, y_pred))
-        print('SW predict time (average on', nLoops,'runs for', y_pred.size, 'samples): ', sw_time, 's')
+        print('SW predict latency (average on', nLoops,'runs for', y_pred.size, 'samples): ', "{:.2e}".format(sw_time/nLoops), 's')
+        print("SW predict throughput:", "{:.2e}".format(nLoops*y_pred.size/sw_time), "samples/s")
         print("SW Number of features:",x_test.shape[1])
         print("SW Number of trees:",number_of_trees)
         print("SW Number of classes:",model_sk_multinomial.classes_.shape[0])
@@ -395,12 +454,10 @@ if enable_multinomial:
     if (enable_FPGA_inference):
         import XlPluginDecisionTreeInference as xl
 
-        print("Preparing HW inference ...")
-
         setup_starttime = time.perf_counter()
 
         xlrf = xl.XlRFInference()
-        xlrf.setModel("RF_multinomial_flight.xlmodel")
+        xlrf.setModel(modelFPGAFileName)
 
         setup_endtime = time.perf_counter()
         HW_setup_time = setup_endtime - setup_starttime
@@ -408,13 +465,23 @@ if enable_multinomial:
         x_nd = np.array(x_test, dtype=np.float32, order='C')
 
         print("Starting HW inference ...")
-        hw_start_time = time.perf_counter()
+        #throughput measure
+        start_time = time.perf_counter()
         for i in range(nLoops):
-            xlrf.predict(x_nd)
+            xlrf.predict(x_nd+i)
         for i in range(nLoops):
             y_pred = xlrf.get_results()
-        hw_stop_time = time.perf_counter()
-        hw_time = (hw_stop_time - hw_start_time)/nLoops
+        stop_time = time.perf_counter()
+        hw_time_throughput = stop_time - start_time
+
+        #latency measure
+        start_time = time.perf_counter()
+        for i in range(nLoops):
+            xlrf.predict(x_nd+i)
+        for i in range(nLoops):
+            y_pred = xlrf.get_results()
+        stop_time = time.perf_counter()
+        hw_time_latency = stop_time - start_time
 
         y_pred = y_pred.argmax(1)
         y_pred = model_sk_multinomial.classes_.take(y_pred, axis=0)
@@ -428,9 +495,8 @@ if enable_multinomial:
         error = abs(y_test - y_pred)
         print("HW error",error.mean())
         print("HW accuracy score",accuracy_score(y_test, y_pred))
-        print('HW predict time (average on', nLoops,'runs for', y_pred.size, 'samples): ', hw_time, 's')
-        if enable_SW_inference:
-            print('HW vs.SW speedup: ', sw_time/hw_time, 'X')
+        print('HW predict latency (average on', nLoops,'runs for', y_pred.size, 'samples): ', "{:.2e}".format(hw_time_latency/nLoops), 's')
+        print("HW predict throughput:", "{:.2e}".format(nLoops*y_pred.size/hw_time_throughput), "samples/s")
         print("HW Number of features:",x_test.shape[1])
         print("HW Number of trees:",number_of_trees)
         print("HW Number of classes:",model_sk_multinomial.classes_.shape[0])
