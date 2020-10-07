@@ -37,13 +37,24 @@ See the following table for experiment arguments:
 | --n_loops int | integer | the number of iterations over which the execution time is averaged | 1000 |
 | --data_fpath string | string | file path to the dataset |
 
-###### Random Forest multinomial classification inference on SW and HW (example)
+###### Random Forest regression and classification inference (example)
 
-Run the Random Forest multinomial classification with 100 trees and 1000 samples using `python3 scripts/RF_scikit_flight.py --data_fpath /app/xelera_demo/data/flight-delays/flights.csv --enable_regression false --enable_binomial false  --enable_multinomial true --enable_SW_inference true --enable_FPGA_inference true --number_of_trees 100 --num_test_samples 1000`. You will be prompted the accurracy and latency measures for CPU (SW) and FPGA (HW) inference runs. Note that training and execution in software might take some time.
+`python3 scripts/RF_scikit_flight.py --data_fpath /app/xelera_demo/data/flight-delays/flights.csv --enable_regression true --enable_binomial true --enable_multinomial true --enable_SW_inference true --enable_FPGA_inference true --number_of_trees 100 --num_test_samples 100 --n_loops 100`. 
+You will be prompted the accurracy and latency and throughtput measures for CPU (SW) and FPGA (HW) inference runs. Note that training and execution in software might take some time.
 
-###### XGBoost regression inference on HW only (example)
+###### XGBoost regression and classification inference (example)
+
+`python3 scripts/XGB_XGBoost_flight.py --data_fpath /app/xelera_demo/data/flight-delays/flights.csv --enable_regression true --enable_binomial true --enable_multinomial true --enable_SW_inference true --enable_FPGA_inference true --number_of_trees 100 --num_test_samples 100 --n_loops 100`. 
+You will be prompted the accurracy and latency and throughtput measures for CPU (SW) and FPGA (HW) inference runs. Note that training and execution in software might take some time.
+
+###### LightGBM regression and classification inference (example)
+
+`python3 scripts/LightGBM_LightGBM_flight.py --data_fpath /app/xelera_demo/data/flight-delays/flights.csv --enable_regression true --enable_binomial true --enable_multinomial true --enable_SW_inference true --enable_FPGA_inference true --number_of_trees 100 --num_test_samples 100 --n_loops 100`. 
+You will be prompted the accurracy and latency and throughtput measures for CPU (SW) and FPGA (HW) inference runs. Note that training and execution in software might take some time.
+
+###### Demo XGBoost regression inference on HW only (example)
 Run the XGBoost regression with 100 trees and 1000 samples using
-`python3 scripts/demo_FPGA_XGB_regression_flight.py --data_fpath /app/xelera_demo/data/flight-delays/flights.csv --number_of_trees 100 --num_test_samples 1000` You will be prompted the accurracy and throughtput measures for FPGA (HW) inference runs.
+`python3 scripts/demo_FPGA_XGB_regression_flight.py --data_fpath /app/xelera_demo/data/flight-delays/flights.csv --number_of_trees 100 --num_test_samples 1000 --n_loops 1000` You will be prompted the accurracy and throughtput measures for FPGA (HW) inference runs.
 
 #### Step-by-Step Guide
 
