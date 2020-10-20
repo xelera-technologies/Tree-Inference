@@ -6,7 +6,7 @@
 
 
 ```
-tagname="f1.2xlarge-marketplace-2020.1-0.3.0b3"
+tagname="f1.2xlarge-marketplace-2020.1-0.4.0b4"
 
 user=`whoami`
 timestamp=`date +%Y-%m-%d_%H-%M-%S`
