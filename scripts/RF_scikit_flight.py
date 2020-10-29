@@ -175,7 +175,6 @@ if enable_regression:
         start_time = time.perf_counter()
         for i in range(nLoops):
             xlrf.predict(x_nd+i)
-        for i in range(nLoops):
             y_pred = xlrf.get_results()
         stop_time = time.perf_counter()
         hw_time_latency = stop_time - start_time
@@ -317,7 +316,6 @@ if enable_binomial:
         start_time = time.perf_counter()
         for i in range(nLoops):
             xlrf.predict(x_nd+i)
-        for i in range(nLoops):
             y_pred = xlrf.get_results()
         stop_time = time.perf_counter()
         hw_time_latency = stop_time - start_time
@@ -478,7 +476,6 @@ if enable_multinomial:
         start_time = time.perf_counter()
         for i in range(nLoops):
             xlrf.predict(x_nd+i)
-        for i in range(nLoops):
             y_pred = xlrf.get_results()
         stop_time = time.perf_counter()
         hw_time_latency = stop_time - start_time
