@@ -1,14 +1,14 @@
 # On-premises
 
 
-1. Request a licvense via the [Xilinx App Store](https://appstore.xilinx.com) for the Xelera decision Tree Inference Docker Image and download the Credential Key File `cred.json`
+1. Request a license via the [Xilinx App Store](https://appstore.xilinx.com) for the Xelera decision Tree Inference Docker Image and download the credential key File `cred.json`
 2. Host Setup
     1. Clone GitHub Repository for Xilinx Base Runtime: `git clone https://github.com/Xilinx/Xilinx_Base_Runtime.git && cd Xilinx_Base_Runtime`
     2. Run the Host Setup Script: `./host_setup.sh -v 2020.2`
 3. Install Docker (if not installed yet)
     1. `cd Xilinx_Base_Runtime/utilities`
     2. `./docker_install.sh`
-4. Update `<license-file>` and `<tag-name>` values (a list of Docker images is available on [Xelera Technologies Docker Hub](https://hub.docker.com/r/xeleratechnologies/decision-tree-inference) page). The latest tags are:
+4. Update `<tag-name>` values (a list of Docker images is available on [Xelera Technologies Docker Hub](https://hub.docker.com/r/xeleratechnologies/decision-tree-inference) page). The latest tags are:
 
 |            Cards/Platform            |     Tag        |
 | :------------------------- |:------------------------- |
@@ -44,7 +44,7 @@ docker run \
      --rm \
      $docker_devices \
      -e "TERM=xterm-256color" \
-     --mount type=bind,source=${PWD}/$licenseFile,target=/opt/xelera/cred.json,readonly \\
+     --mount type=bind,source=${PWD}/cred.json,target=/opt/xelera/cred.json,readonly \\
      --name cont-decision-tree-inference-$USER-$timestamp \
      xeleratechnologies/decision-tree-inference:${tagname}
 ```
