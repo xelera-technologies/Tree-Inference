@@ -8,7 +8,7 @@
 3. Install Docker (if not installed yet)
     1. `cd Xilinx_Base_Runtime/utilities`
     2. `./docker_install.sh`
-4. Update `<tag-name>` values (a list of Docker images is available on [Xelera Technologies Docker Hub](https://hub.docker.com/r/xeleratechnologies/decision-tree-inference) page). The latest tags are:
+4. Update `<tag-name>` (a list of Docker images is available on [Xelera Technologies Docker Hub](https://hub.docker.com/r/xeleratechnologies/decision-tree-inference) page). The latest tags are:
 
 |            Cards/Platform            |     Tag        |
 | :------------------------- |:------------------------- |
