@@ -35,7 +35,7 @@ For training and all methods other than the prediction (e.g. information about t
 | ----------------- | ----------    | ----- |
 | regression        | supported     | ----- |
 | binomial classification | supported | ----- |
-| multinomial classification | supported| max 4 classes on Alveo U50 |
+| multinomial classification | supported| max 4 classes on Alveo U50 and U200|
 | booster | `gbtree` and `dart` only | `gblinear` not supported |
 | `predict`:`ntree` | only default value `0` available |----- |
 | `predict`:`output_margin | not supported | defaults to `false` |
@@ -55,7 +55,7 @@ For training and all methods other than the prediction (e.g. information about t
 | ----------------- | ----------    | ----- |
 | regression        | supported     | ----- |
 | binomial classification | supported | ----- |
-| multinomial classification | supported| max 4 classes on Alveo U50 |
+| multinomial classification | supported| max 4 classes on Alveo U50 and U200|
 | boosting_type | `gbdt` and `dart` | `rf` in development; `goss` not supported |
 | `predict`:`num_iteration` | only default value | default = `None` |
 | `predict`:`raw_score` | not supported | defaults to  `false` |
