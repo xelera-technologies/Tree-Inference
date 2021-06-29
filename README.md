@@ -55,7 +55,7 @@ Xelera Decision Tree Inference is available:
 
 ## API changes
 
-See [API migration](docs/migration.md) for instructions to migrate to the updated API of this release.
+See [API migration](docs/migration.md) for instructions to migrate from 0.3.0b3 to 0.4.0b4 release.
 
 ## Contacts
 
