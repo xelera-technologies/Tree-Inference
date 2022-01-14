@@ -1,7 +1,7 @@
 # On-premises
 
 
-1. Request a license via the [Xilinx App Store](https://appstore.xilinx.com) for the Xelera decision Tree Inference Docker Image and download the credential key File `cred.json`
+1. Request a license via the [Xilinx App Store](https://appstore.xilinx.com/products/acceleration-solutions/xelera_decision_tree_inference.html%3Fpage_type%3D1&product_id%3D195324) for the Xelera decision Tree Inference Docker Image and download the credential key File `cred.json`
 2. Host Setup
     1. Clone GitHub Repository for Xilinx Base Runtime: `git clone https://github.com/Xilinx/Xilinx_Base_Runtime.git && cd Xilinx_Base_Runtime`
     2. Run the Host Setup Script: `./host_setup.sh -v 2020.2`
