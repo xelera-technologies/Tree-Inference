@@ -41,8 +41,8 @@ For supported features and current limitations, see [supported parameters](docs/
 #### Installation
 
 Xelera Decision Tree Inference is available:
-* [On-premises](docs/on-premises.md)
-* [AWS](docs/aws-marketplace.md)
+* [On-premises (Xilinx App Store)](docs/on-premises.md)
+* [Cloud (AWS marketplace)](docs/aws-marketplace.md)
 
 #### Get started with examples
 * [Predict the flight delay](docs/exampleFlight.md)
